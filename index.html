@@ -24,27 +24,14 @@
 
       .container {
         flex-wrap: wrap; /* Allow content to wrap on smaller screens */
-
         max-width: 800px;
         padding: 20px;
         display: flex;
         align-items: center;
       }
 
-      .headshot {
-        width: 100%;
-        height: auto;
-        border-radius: 0%;
-        background-image: url("images/Andrew.png"); /* Add your image path here */
-        background-size: cover;
-        background-position: center;
-        margin-right: 0;
-        margin-bottom: 20px;
-      }
-
       .text {
         max-width: 100%; /* Allow text to span the full width if necessary */
-        ;
       }
 
       h1 {
@@ -70,41 +57,53 @@
       .social-links a:hover {
         text-decoration: underline;
       }
+      .headshot {
+        width: 100%;
+        max-width: 400px; /* Ensures the image doesn't stretch too much */
+        height: auto; /* Maintains the aspect ratio */
+        margin-right: 0;
+        margin-bottom: 20px;
+      }
 
       @media (min-width: 769px) {
-  .headshot {
-    width: 400px; /* Original desktop size */
-    height: 400px;
-    margin-right: 20px;
-    margin-bottom: 0;
-  }
-}
+        .headshot {
+          width: 400px; /* Keeps the image size consistent for larger screens */
+          height: 400px; /* Adjust this to maintain a square shape if desired */
+          margin-right: 20px;
+          margin-bottom: 0;
+        }
+      }
     </style>
   </head>
   <body>
     <div class="container">
-      <div class="headshot"></div>
+      <div class="headshot">
+        <img
+          src="images/Andrew.png"
+          alt="Headshot"
+          style="width: 100%; height: auto; object-fit: cover"
+        />
+      </div>
       <div class="text">
         <h1>Hi, I'm Andrew!</h1>
         <p>
-          I'm studying computer science at Stanford. I also coach
-          high school debate and consult for Stanford Marketing Group. In my
-          free time, I listen to music and cook meats.
+          I'm studying computer science at Stanford. I also coach high school
+          debate and consult for Stanford Marketing Group. In my free time, I
+          listen to music and cook meats.
         </p>
 
         <div class="social-links">
           <a href="https://github.com/awesel" target="_blank">GitHub</a> |
           <a href="https://linkedin.com/in/awesel" target="_blank">LinkedIn</a>
           |
-          <a href="mailto:awesel@stanford.edu">Email</a> | 
-          <a href="projects.html" style="color: blue"
-            >Projects</a
-          >
+          <a href="mailto:awesel@stanford.edu">Email</a> |
+          <a href="projects.html" style="color: blue">Projects</a>
           |
-          <a href="files/resume.pdf" target="_blank" style="color: blue">Resume</a>
-          
-          
+          <a href="files/resume.pdf" target="_blank" style="color: blue"
+            >Resume</a
+          >
         </div>
+      </div>
     </div>
   </body>
 </html>

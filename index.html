@@ -23,6 +23,8 @@
       }
 
       .container {
+        flex-wrap: wrap; /* Allow content to wrap on smaller screens */
+
         max-width: 800px;
         padding: 20px;
         display: flex;
@@ -30,17 +32,19 @@
       }
 
       .headshot {
-        width: 400px;
-        height: 400px;
+        width: 100%;
+        height: auto;
         border-radius: 0%;
         background-image: url("images/Andrew.png"); /* Add your image path here */
         background-size: cover;
         background-position: center;
-        margin-right: 20px;
+        margin-right: 0;
+        margin-bottom: 20px;
       }
 
       .text {
-        max-width: 480px;
+        max-width: 100%; /* Allow text to span the full width if necessary */
+        ;
       }
 
       h1 {
@@ -66,6 +70,15 @@
       .social-links a:hover {
         text-decoration: underline;
       }
+
+      @media (min-width: 769px) {
+  .headshot {
+    width: 400px; /* Original desktop size */
+    height: 400px;
+    margin-right: 20px;
+    margin-bottom: 0;
+  }
+}
     </style>
   </head>
   <body>

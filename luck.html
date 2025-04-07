@@ -8,30 +8,6 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap"
       rel="stylesheet"
     />
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-    <!-- Load .env file -->
-    <script>
-      // This will be run before the Firebase initialization
-      fetch(".env")
-        .then((response) => response.text())
-        .then((data) => {
-          const env = {};
-          data.split("\n").forEach((line) => {
-            const parts = line.split("=");
-            if (parts.length === 2) {
-              const key = parts[0].trim();
-              const value = parts[1].trim();
-              if (!key.startsWith("#")) {
-                env[key] = value;
-              }
-            }
-          });
-          window.env = env;
-        })
-        .catch((error) => console.error("Error loading .env file:", error));
-    </script>
     <style>
       body {
         margin: 0;
@@ -76,12 +52,6 @@
         text-decoration: underline;
       }
 
-      .view-counter {
-        font-size: 0.8em;
-        color: #666;
-        margin-bottom: 1em;
-      }
-
       .author {
         font-size: 1em;
         font-style: italic;
@@ -94,9 +64,6 @@
     <div class="container">
       <h1>You probably have to get lucky</h1>
       <div class="author">Andrew Wesel</div>
-      <div class="view-counter">
-        Views: <span id="viewCount">Loading...</span>
-      </div>
       <p>
         For the past few months, all my friends have been desperately seeking
         summer work. I assumed that studying CS at Stanford, with its reputation
@@ -197,43 +164,5 @@
         <a href="index.html">← Back to Home</a>
       </div>
     </div>
-
-    <script>
-      // Initialize Firebase - Replace with your own Firebase config
-      const firebaseConfig = {
-        apiKey: window.env?.FIREBASE_API_KEY,
-        authDomain: window.env?.FIREBASE_AUTH_DOMAIN,
-        databaseURL: window.env?.FIREBASE_DATABASE_URL,
-        projectId: window.env?.FIREBASE_PROJECT_ID,
-        storageBucket: window.env?.FIREBASE_STORAGE_BUCKET,
-        messagingSenderId: window.env?.FIREBASE_MESSAGING_SENDER_ID,
-        appId: window.env?.FIREBASE_APP_ID,
-      };
-
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-
-      // Get a reference to the database service
-      const database = firebase.database();
-
-      // Function to update page views
-      function updatePageViews() {
-        const pageViewsRef = database.ref("pageViews/blog");
-
-        // Increment the count
-        pageViewsRef.transaction((currentViews) => {
-          return (currentViews || 0) + 1;
-        });
-
-        // Display the updated count
-        pageViewsRef.on("value", (snapshot) => {
-          document.getElementById("viewCount").textContent =
-            snapshot.val() || 0;
-        });
-      }
-
-      // Call the function when the page loads
-      window.onload = updatePageViews;
-    </script>
   </body>
 </html>

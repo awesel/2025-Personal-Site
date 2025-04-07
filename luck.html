@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background-color: #ffffff;
+        color: #000000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 800px;
+        padding: 20px;
+        margin-left: 20px;
+      }
+
+      h1 {
+        font-size: 2em;
+        margin-bottom: 0.3em;
+      }
+
+      p {
+        font-size: 1em;
+        line-height: 1.5;
+        margin-bottom: 1em;
+      }
+
+      .back-link {
+        margin-top: 2em;
+      }
+
+      .back-link a {
+        text-decoration: none;
+        color: #0000ee;
+      }
+
+      .back-link a:hover {
+        text-decoration: underline;
+      }
+
+      .view-counter {
+        font-size: 0.8em;
+        color: #666;
+        margin-bottom: 1em;
+      }
+
+      .author {
+        font-size: 1em;
+        font-style: italic;
+        color: #444;
+        margin-bottom: 0.3em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>You probably have to get lucky</h1>
+      <div class="author">Andrew Wesel</div>
+      <div class="view-counter">
+        Views: <span id="viewCount">Loading...</span>
+      </div>
+      <p>
+        For the past few months, all my friends have been desperately seeking
+        summer work. I assumed that studying CS at Stanford, with its reputation
+        and proximity to Silicon Valley, would guarantee us tech job
+        opportunities. Unfortunately, even coming from a top institution,
+        recruiting is still a pain and nothing is guaranteed, especially as a
+        freshman.
+      </p>
+      <p>
+        Since I am a rookie at recruiting, I’ve made a bunch of rookie mistakes.
+        The most important factor in my success at getting a job this summer was
+        luck, but a close second was trying not to repeat my mistakes. There are
+        (usually) three stages in applying in tech: resume screening, online
+        assessment, and live interviews. I had to fail at each stage once before
+        learning how to pass. My resume in September was three pages of
+        insignificant information. I only got an online assessment after
+        spending a while reading online about how to build a tech resume and
+        going to several resume critique sessions. That first online assessment?
+        I couldn’t solve a single problem. My first live interview was just
+        embarassing.
+      </p>
+      <p>
+        Most internships are looking for juniors because companies want to
+        convert their interns to full-time employees, and freshmen know far less
+        stuff than juniors. I can hardly believe how much I've learned in the
+        last year. For each class, there are about five problem types that I
+        learned how to do, ranging from understanding assembly language to
+        writing proofs using induction. For each problem, there are at least
+        five facts I must have learned about math or computers that could be
+        relevant for work. Even though older people I've talked to claim to
+        learn the most important skills while on the job, I can't help but feel
+        that three more years of classes would make me an exponentially better
+        employee. It's unusual for a company to be enthusiastic about younger
+        candidates, for good reasons.
+      </p>
+      <p>
+        There's already a lot of advice online already about how to go about the
+        application process. Check out
+        <a href="https://evykassirer.github.io/playing-the-internship-game/"
+          >this website</a
+        >
+        for some of the best general advice. To that, I can only add a few
+        anecdotes about how people around me found success in finding work in
+        their freshman summer.
+      </p>
+      <h3>Method 1: Big Tech Freshman Programs</h3>
+      <p>
+        Lots of tech companies offer internships designed for freshmen. This is
+        one of the most obvious/direct paths to an internship, so it's also one
+        of the most competitive. Google STEP acceptance rate is definitely in
+        the low single digits, and I doubt that other programs are much higher.
+        Being at Stanford, all of my friends are super talented. I'm
+        consistently impressed by their software portfolios and general
+        intelligence. Even among them, I only know a handful that got offers
+        from big tech first-year programs. These programs are definitely worth
+        applying to, but they're not easier to get into just because they're
+        targeted at freshmen.
+      </p>
+      <h3>Method 2: Call Everyone You Know</h3>
+      <p>
+        I saw a YouTuber advertising his expensive recruiting course. He boasted
+        about a very high success rate in finding people jobs. He said the first
+        thing he advises his students to do is to go through their contacts and
+        call anyone who might be able to help find a job. I'm sure anyone can do
+        that without buying his course. This process was kind of embarrassing,
+        but resulted in an interview for me. This was my first live technical
+        interview, and I did very poorly. Failing this interview helped me
+        understand that it takes a lot of devoted effort outside out class to
+        get good at technical interviews. It's not the same skill as in-class
+        test taking!
+      </p>
+      <h3>Method 3: Get Lucky</h3>
+      <p>
+        This is unfortunately the most common way people around me have gotten
+        internships as freshmen. Personally, I met my recruiter at a school
+        career fair, where I was told they would not be offering an internship
+        program. Due to events beyond my control (luck), they changed their mind
+        after a few weeks and invited a few people from the career fair for
+        interviews. Learning from my earlier mistakes, I spent all my free time
+        preparing for the interview, about ~20 hours in the week before the
+        interview. I ended up being asked about content I had reviewed just the
+        hour before the interview. I hope it's clear how much had to go right
+        for me to get a job.
+      </p>
+      <p>
+        Many of my friends have had similar experiences. One heard back from a
+        cold application that they thought they weren't qualified for. A
+        recruiter reaches out to another of my friends for a full-time position,
+        but, after a good conversation, they agree to hire him as an intern.
+        There are clear ways to put yourself in positions to get lucky like
+        this, i.e. go to career fairs, be active on LinkedIn, and apply to lots
+        of jobs.
+      </p>
+      <p>
+        <strong>In the end, you probably have to get lucky.</strong>
+      </p>
+      <div class="back-link">
+        <a href="index.html">← Back to Home</a>
+      </div>
+    </div>
+
+    <script>
+      // Initialize Firebase - Replace with your own Firebase config
+      const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+        databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_PROJECT_ID.appspot.com",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID",
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      // Get a reference to the database service
+      const database = firebase.database();
+
+      // Function to update page views
+      function updatePageViews() {
+        const pageViewsRef = database.ref("pageViews/blog");
+
+        // Increment the count
+        pageViewsRef.transaction((currentViews) => {
+          return (currentViews || 0) + 1;
+        });
+
+        // Display the updated count
+        pageViewsRef.on("value", (snapshot) => {
+          document.getElementById("viewCount").textContent =
+            snapshot.val() || 0;
+        });
+      }
+
+      // Call the function when the page loads
+      window.onload = updatePageViews;
+    </script>
+  </body>
+</html>

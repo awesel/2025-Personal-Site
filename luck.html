@@ -11,6 +11,27 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <!-- Load .env file -->
+    <script>
+      // This will be run before the Firebase initialization
+      fetch(".env")
+        .then((response) => response.text())
+        .then((data) => {
+          const env = {};
+          data.split("\n").forEach((line) => {
+            const parts = line.split("=");
+            if (parts.length === 2) {
+              const key = parts[0].trim();
+              const value = parts[1].trim();
+              if (!key.startsWith("#")) {
+                env[key] = value;
+              }
+            }
+          });
+          window.env = env;
+        })
+        .catch((error) => console.error("Error loading .env file:", error));
+    </script>
     <style>
       body {
         margin: 0;
@@ -85,7 +106,7 @@
         freshman.
       </p>
       <p>
-        Since I am a rookie at recruiting, I’ve made a bunch of rookie mistakes.
+        Since I am a rookie at recruiting, I've made a bunch of rookie mistakes.
         The most important factor in my success at getting a job this summer was
         luck, but a close second was trying not to repeat my mistakes. There are
         (usually) three stages in applying in tech: resume screening, online
@@ -94,7 +115,7 @@
         insignificant information. I only got an online assessment after
         spending a while reading online about how to build a tech resume and
         going to several resume critique sessions. That first online assessment?
-        I couldn’t solve a single problem. My first live interview was just
+        I couldn't solve a single problem. My first live interview was just
         embarassing.
       </p>
       <p>
@@ -180,13 +201,23 @@
     <script>
       // Initialize Firebase - Replace with your own Firebase config
       const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-        databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_PROJECT_ID.appspot.com",
-        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-        appId: "YOUR_APP_ID",
+        apiKey:
+          window.env?.FIREBASE_API_KEY ||
+          "AIzaSyA3JTpfXYPfhN3DsFICqrEz0C6Tduw8Bbo",
+        authDomain:
+          window.env?.FIREBASE_AUTH_DOMAIN ||
+          "insilico-surveys.firebaseapp.com",
+        projectId: window.env?.FIREBASE_PROJECT_ID || "insilico-surveys",
+        storageBucket:
+          window.env?.FIREBASE_STORAGE_BUCKET ||
+          "insilico-surveys.firebasestorage.app",
+        messagingSenderId:
+          window.env?.FIREBASE_MESSAGING_SENDER_ID || "205912587561",
+        appId: window.env?.FIREBASE_APP_ID || "G-3PTD38X3D5",
+        databaseURL:
+          "https://" +
+          (window.env?.FIREBASE_PROJECT_ID || "insilico-surveys") +
+          ".firebaseio.com",
       };
 
       // Initialize Firebase

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Making PaulGPT</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background-color: #ffffff;
+        color: #000000;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start; /* Align items to the top for longer content */
+        min-height: 100vh;
+        padding: 20px 0; /* Add padding top and bottom */
+      }
+
+      .container {
+        max-width: 800px;
+        padding: 20px;
+        margin-left: 20px;
+        margin-right: 20px; /* Add right margin for balance */
+      }
+
+      h1 {
+        font-size: 2em;
+        margin-bottom: 0.3em;
+      }
+
+      h3 {
+        font-size: 1.3em;
+        margin-top: 1.5em;
+        margin-bottom: 0.5em;
+      }
+
+      p {
+        font-size: 1em;
+        line-height: 1.6; /* Slightly increased line-height for readability */
+        margin-bottom: 1em;
+      }
+
+      .back-link {
+        margin-top: 2em;
+      }
+
+      .back-link a {
+        text-decoration: none;
+        color: #0000ee;
+      }
+
+      .back-link a:hover {
+        text-decoration: underline;
+      }
+
+      .author {
+        font-size: 1em;
+        font-style: italic;
+        color: #444;
+        margin-bottom: 1em; /* Increased bottom margin */
+      }
+
+      code {
+        background-color: #f0f0f0;
+        padding: 0.2em 0.4em;
+        border-radius: 3px;
+        font-family: monospace;
+      }
+
+      blockquote {
+        border-left: 3px solid #ccc;
+        padding-left: 1em;
+        margin-left: 0;
+        font-style: italic;
+        color: #555;
+      }
+
+      .qa-section strong {
+        display: block;
+        margin-top: 1em;
+        margin-bottom: 0.3em;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Making PaulGPT</h1>
+      <div class="author">Andrew Wesel</div>
+      <p>
+        In my high school CS course, we had a project where we made a Markov
+        chain that could do next-word prediction based on our text messages. The
+        program would read a dataset of my texts once, learning what words
+        follow what other words at what frequency, and, given a single beginning
+        word, could complete a text message. Even though the outputs were
+        nonsensical, I had a lot of fun with that assignment. Naturally, I have
+        since been very excited about developments in LLMs.
+      </p>
+
+      <p>
+        Modern chatbot language models are by far the coolest technology I've
+        had the opportunity to play with. I'm consistently impressed by how
+        helpful I find chatbots. Because I use this technology so much, I am
+        quite curious about how it works.
+      </p>
+
+      <p>
+        Here's what I know: Models have a "pre-training" stage where they learn
+        patterns in text across a huge dataset of internet content. During this
+        stage, the model is fed the text as a stream and tries to guess the next
+        token (word or subword). The correct token is then revealed to the model
+        so that the model updates its weights accordingly. After pre-training,
+        the model is solely an internet document completer; you can enter the
+        beginning of a document, and the model will predict the next token until
+        it generates a special token to indicate the end of the document. In
+        order to turn the internet document generator into a helpful chatbot,
+        there are several "post-training" steps that engineers can take. They
+        might write an initial prompt to make the internet document seem like a
+        conversation between a helpful assistant and a human. They might use
+        reinforcement learning methods to encourage models to be concise,
+        accurate, or excel at another measure. They also might use supervised
+        fine-tuning, a learning method in which the model is shown several
+        high-quality responses to questions and learns the patterns in those
+        responses.
+      </p>
+
+      <p>
+        This week, I decided to implement a supervised fine-tuning pipeline to
+        change model behavior. "Supervised" learning involves data with labels:
+        questions with known correct answers. Following the fun I had in my high
+        school CS class, I wanted to do a personality experiment, where I tried
+        to influence a model to speak in a certain way. I've been reading a lot
+        of blogs from Silicon Valley people, so I decided to train on Paul
+        Graham's blog posts. I first scraped them from his website using
+        BeautifulSoup. Then, I processed it into a DataFrame of paragraphs using
+        basic string methods I'm learning in my data science class. Finally, I
+        queried the OpenAI API to assign questions to each paragraph. Processing
+        all of these tokens cost about 15 cents. From talking to the chatbot
+        about my process, I found that this data is traditionally stored in a
+        <code>JSON</code> with a specific format, so I downloaded my dataframe
+        with those specifications. Now, I've created a dataset of questions and
+        answers that captures how Paul Graham speaks. I had about five thousand
+        examples, which is small for full fine-tuning but should be fine for
+        <code>LoRA</code>, a softer form of fine-tuning which requires less
+        data. It uses matrix decomposition to perform a relatively small number
+        of calculations, then apply it to the entire set of weights to change
+        the overall model behavior.
+      </p>
+
+      <p>
+        After creating the dataset, I was ready for training. I had
+        <code>o3</code> write me a quick fine-tuning script for
+        <code>llama-7b</code>, then I spun up a Lambda H100 and tried to run my
+        code. Only after starting the GPU did I realize that I needed a license
+        to fine-tune models. I tried signing up for llama's license, but people
+        online said it could take a few days to be approved (it didn't, but I
+        didn't know that at the time). Instead, I agreed to some terms for
+        Google's <code>Gemma-7b-Instruct</code> model and was approved
+        instantly. After gaining access to a model on HuggingFace, I had a few
+        package import concerns, but <code>o3</code> was able to resolve them
+        pretty quickly. Training ended up taking about 15 minutes, which cost 65
+        cents in total. I uploaded the most important files to HuggingFace
+        through the command line, and downloaded every file generated during
+        training to my computer.
+      </p>
+
+      <p>
+        Now that I had the <code>LoRA</code> fine-tuned weights, all that was
+        left was inference. I wanted to run inference on my personal computer,
+        not on a cloud GPU. I had <code>o3</code> write me an inference script,
+        but upon running, I found that my poor overworked CPU took multiple
+        minutes to generate a single token! I had thought that
+        <code>Gemma-7b</code> was a small model that my CPU might be able to
+        handle, which turned out to be true, but not without some tricks to
+        speed it up.
+      </p>
+
+      <p>
+        One limiting factor for running a model locally is the amount of memory
+        needed to store the weights. By default, <code>Gemma-7B</code> uses
+        <code>float32</code> precision, meaning each weight takes 32 bits to
+        represent. Since each of the 32 bits can be on or off, this allows for
+        2^32 (4.3 billion) distinct values. If you want to fit more model
+        weights in RAM, you have to have each number take up less memory, which
+        means representing the same data with fewer bits. This process is called
+        quantization. <code>Int8</code> has 256 (2^8) different bit patterns,
+        and we can make each of those bit patterns refer to some float by a
+        basic linear equation. The result is lossy: some precision is lost
+        because nearby values collapse together. But the memory savings are
+        huge, and in practice, the model performs nearly as well, especially
+        with new techniques like quantization aware training.
+      </p>
+
+      <p>
+        I ended up downloading a quantized (much smaller and faster) version of
+        <code>Gemma-7b</code>, and had to change my fine-tuning weights to apply
+        correctly to the quantized version. By this time, I had run out of
+        <code>o3</code> credits, so my technical advisor switched to Gemini 2.5
+        Pro. It guided me through running
+        <code>convert_lora_to_gguf.py</code> from the
+        <code>llama.cpp</code> repo to properly apply my fine-tuned weights to
+        the quantized model.
+      </p>
+
+      <p>
+        Finally, I could run inference on my laptop! I processed each query
+        through default <code>Gemma-7B</code> and my fine-tuned model to compare
+        them directly. There were several tokens that the fine-tuned model loved
+        to pick, which I banned to make the results slightly better. It seemed
+        to have an infinite supply of junk tokens that I was cycling through. As
+        I banned one after another, it became clear that I could not debug this
+        behavior without a different training process.
+      </p>
+
+      <p>
+        Many of the results from both models lacked factual accuracy. The
+        fine-tuned model had more character, but it also generated nonsense more
+        often. I only preferred the fine-tuned model's responses when the
+        Instruct model refused a question. I think the best relative result
+        comes from asking for an opinion about Sam Altman:
+      </p>
+
+      <div class="qa-section">
+        <strong>Question: What is Sam Altman's best quality?</strong>
+        <blockquote>
+          <strong>Gemma-7B-Instruct:</strong> I do not have information about
+          Sam Altman's qualities, therefore I cannot answer this question.
+        </blockquote>
+        <blockquote>
+          <strong>PaulGPT-1:</strong> Sam Altman's best quality is his
+          enthusiass about YC. He cares more than he should, which has been
+          instrumental in its success (and will be eventually debunked by
+          reality), but I think the reason we find him so lovable — indeed that
+          you Parmi Szermeruggestes perceive us first and foremost as Siamo
+          Strasbos incessantees when Sam's name comes up at YC dinners— is
+          because his enthusiass masks an underlying shrewdness. He knows what
+          he wants, has a fairly good sense of how to get it (which sometimes
+          gets him in trouble), but also subgoals himself from extraneous
+          influences like dogma ("we have always...?"). I wouldn't want anyone
+          less as the boss if this were true about me too!
+        </blockquote>
+      </div>
+
+      <p>
+        This result is alright, but it's still riddled with nonsense. Even
+        though <code>Gemma-7B</code> is rarely factually accurate, it usually is
+        at least coherent. I'm going to train again and make a few changes to
+        try and generally increase the quality of my output. First, I will train
+        on <code>Gemma-3-4B-IT</code>. It's a smaller but much newer model.
+        Quantization aware training and other newer methods should ideally have
+        it produce better results despite its smaller size.
+      </p>
+
+      <p>
+        I'm also going to clean the data again. I'm going to feed everything
+        through GPT-4o-mini, asking for grammar/formatting fixes and a binary
+        response of whether a given paragraph is a good answer to a question.
+        This process cost 50 cents. I decided to just trust the model on
+        categorizing question-answer pairs as good or bad. In truth, nobody
+        <i>really</i> knows what makes training data good or bad beyond basic
+        principles, so I'm just going to trust that this heuristic is good
+        enough. After all of this cleaning and 90-10 train-eval split, I ended
+        up with 3100 high quality QA pairs.
+      </p>
+
+      <p>
+        I also tuned hyperparameters to prevent overfitting. I trained on 2
+        epochs instead of 3. I decreased the learning rate by 10x. I added a
+        0.01 weight decay to discourage the model from clinging too tightly to
+        any particular tokens.
+      </p>
+
+      <p>
+        I spun up another H100 on Lambda (named Paul GPU), ran the new training
+        script, the same script to apply <code>LoRA</code> weights to a
+        quantized model, and the same inference script to compare the default
+        model to my fine-tuned version. Training a second time cost another 60
+        cents. I'm evaluating the performance of this process based on vibes,
+        not real metrics, but I really do think this second training process
+        yielded significantly better results. It largely adopted Paul's writing
+        style and several of his political opinions. Of course, this is still a
+        tiny model post-trained on a tiny amount of data. <code>LoRA</code> is
+        notoriously finicky, and I only did one hyperparameter tuning. But
+        still, look at this cool result where the model learned to oppose the
+        death penalty (instead of taking a "both-sides" perspective) by training
+        on Paul's essay on it:
+      </p>
+
+      <div class="qa-section">
+        <strong>Question: Is the death penalty good or bad?</strong>
+        <blockquote>
+          <strong>Gemma-3-4B-Instruct:</strong> Okay, let's tackle this
+          incredibly complex and emotionally charged issue. There's no simple
+          "good" or "bad" answer to the question of whether capital punishment
+          (the death penalty) is good – it sparks deeply held beliefs on both
+          sides with strong ethical arguments supporting each position. Here's a
+          breakdown exploring various facets:
+          <strong>Arguments in Favor - Why Some Believe It's Justified:</strong>
+          Retribution/Justice for Victims & Families: This argument centers
+          around the idea that those who commit heinous crimes (like murder)
+          deserve to suffer as severely and proportionally. Proponents believe
+          it offers justice, closure or a sense of retribution – particularly
+          important in cases where victims' families feel their suffering isn't
+          adequately acknowledged through traditional legal processes like
+          imprisonment alone. <br />Deterrence: The argument here is that the
+          death penalty deters potential criminals from committing capital
+          offenses by instilling fear. However this point remains highly debated
+          and lacks consistent, conclusive evidence (more on which below).
+          <strong>Arguments Against - Why Many Oppose It:</strong>
+          <strong>Ethical & Moral Concerns:</strong>
+          Right to Life: The most fundamental argument is that every human being
+          has a right of life – regardless if they've committed crimes...
+          [Truncated]
+        </blockquote>
+        <blockquote>
+          <strong>PaulGPT-2:</strong> The death penalty is a terrible thing to
+          do. It's an error in judgment, and it should be abolished everywhere
+          except for the most extreme cases of war crimes or terrorism that have
+          no other means available by which they can ever face justice -- but
+          even then only if such measures are possible without causing
+          unnecessary harm elsewhere as well.
+        </blockquote>
+      </div>
+
+      <p>
+        This is my final result! Super happy with it. You can check it out and
+        run inference (for <code>Gemma-3-4B</code>) on even very small
+        computers. Here's the GitHub:
+        <a href="https://github.com/awesel/PaulGPT" target="_blank"
+          >https://github.com/awesel/PaulGPT</a
+        >
+      </p>
+
+      <p>
+        Thank you to Daniel Lee, Aneesh Vathul, and Emily Wesel for reading
+        drafts of this.
+      </p>
+      <p>--------------------------------</p>
+
+      <p>
+        In researching this project I saw someone made a retrieval system with a
+        somewhat similar idea (make LLM talk like Paul Graham). Read Paul's
+        opinion here:
+        <a href="https://paulgraham.com/getideas.html" target="_blank"
+          >https://paulgraham.com/getideas.html</a
+        >.
+      </p>
+
+      <p>
+        To continue this discussion, I also asked PaulGPT-2 "Where do good ideas
+        come from?" This is not a fair test, since PaulGPT-2 was trained on the
+        blog post where PG answers this question, but I still think it's a cool
+        demonstration.
+      </p>
+
+      <div class="qa-section">
+        <strong>PaulGPT-2:</strong>
+        <blockquote>
+          I think good ideas come from a combination of curiosity and
+          serendipity. Curiosity is the engine that drives you to explore new
+          areas, while luck provides an occasional spark in unexpected places
+          when your mind wanders away during daily activities like walking or
+          cooking dinner—as it does for me quite often now because I spend so
+          much time thinking about stuff instead!
+        </blockquote>
+      </div>
+
+      <div class="back-link">
+        <a href="blog.html">← Back to Blog</a>
+      </div>
+    </div>
+  </body>
+</html>

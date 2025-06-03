@@ -183,11 +183,16 @@
 
       <div class="project-description">
         <p>
-          We fine-tuned Qwen-2.5-7B on examples where GPT-4.1 accurately
-          predicted survey response distributions. The results show significant
+          We asked GPT-4.1 to reason and predict the distribution of responses
+          to a national survey. Then, we picked the best reasoning traces and
+          fine-tuned Qwen-2.5-7B on those examples. The results show significant
           improvement - our fine-tuned model achieves an average JSD
           (Jensen-Shannon Divergence) of 0.1, compared to 0.2 for the base Qwen
-          model.
+          model. Importantly, this site only shows examples where both models
+          formatted their answers properly, but our fine-tuned model only had
+          proper formatting about 40% of the time. We are considering
+          reinforcement learning as a way to teach formatting (and better
+          reasoning).
         </p>
         <p>
           Try clicking "New Random Example" to see how the models compare on

@@ -258,19 +258,28 @@
           /would answer this question\. \{.*?\} assistant/i;
         const matchWithDist = text.match(patternWithDist);
         if (matchWithDist) {
-          return text
+          text = text
             .substring(matchWithDist.index + matchWithDist[0].length)
             .trim();
+        } else {
+          // If that doesn't work, try to find just the word "assistant" followed by the reasoning
+          const patternSimple = /assistant\s+/i;
+          const matchSimple = text.match(patternSimple);
+          if (matchSimple) {
+            text = text
+              .substring(matchSimple.index + matchSimple[0].length)
+              .trim();
+          }
         }
 
-        // If that doesn't work, try to find just the word "assistant" followed by the reasoning
-        const patternSimple = /assistant\s+/i;
-        const matchSimple = text.match(patternSimple);
-        if (matchSimple) {
-          return text
-            .substring(matchSimple.index + matchSimple[0].length)
-            .trim();
-        }
+        // Handle numbered lists
+        text = text.replace(/(\d+\.\s+)/g, "<br>$1");
+
+        // Handle dash lists
+        text = text.replace(/(\s*-\s+)/g, "<br>$1");
+
+        // Handle bold text
+        text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
 
         return text;
       }

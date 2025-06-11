@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Month of Learning</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background-color: #ffffff;
+        color: #000000;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+        padding: 20px 0;
+      }
+
+      .container {
+        max-width: 800px;
+        padding: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+      }
+
+      h1 {
+        font-size: 2em;
+        margin-bottom: 0.3em;
+      }
+
+      h2 {
+        font-size: 1.5em;
+        margin-top: 1.5em;
+        margin-bottom: 0.5em;
+      }
+
+      p {
+        font-size: 1em;
+        line-height: 1.6;
+        margin-bottom: 1em;
+      }
+
+      .back-link {
+        margin-top: 2em;
+      }
+
+      .back-link a {
+        text-decoration: none;
+        color: #0000ee;
+      }
+
+      .back-link a:hover {
+        text-decoration: underline;
+      }
+
+      .author {
+        font-size: 1em;
+        font-style: italic;
+        color: #444;
+        margin-bottom: 0.1em;
+      }
+
+      ol {
+        padding-left: 1.5em;
+      }
+
+      li {
+        margin-bottom: 1.5em;
+      }
+
+      li strong {
+        display: block;
+        margin-bottom: 0.3em;
+      }
+
+      li p {
+        margin-top: 0.5em;
+      }
+
+      a {
+        color: #0000ee;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Month of Learning</h1>
+      <div class="author">Andrew Wesel</div>
+
+      <p>
+        I have a month that I'm spending in Los Angeles before going back to the
+        Bay to work for the summer. Over the school year, I've developed a
+        pretty long reading list of machine learning papers that I've wanted to
+        read but haven't had the time. This month, I'm going to try to catch up!
+      </p>
+      <p>
+        This writing is somewhat selfish. It mostly will contain my own notes
+        and is not intended to be super interesting to read.
+      </p>
+
+      <h2>Calendar</h2>
+      <ol>
+        <li>
+          <strong
+            >June 9: Neural networks and the multivariable Chain Rule</strong
+          >
+          <p>From: Math 51 Textbook Appendix</p>
+          <p>
+            This is my third time reading this appendix. Every time I read it, I
+            learn something new, which I think either demonstrates the passage's
+            high quality of writing, or my poor reading comprehension. Thinking
+            of neural networks as a composition of functions really makes it
+            clear that machine learning is really just an optimization problem
+            in multiple variables. Reading this passage also prompted me to
+            learn more about different optimizers- after implementing logistic
+            regression for CS109 last week, I feel much more comfortable with
+            the differences between gradient descent, SGD, mini-batch SGD, and
+            Adam. Last thought: I cannot believe this paper was written in 1950.
+            Claude Shannon was DIFFERENT.
+            <a
+              href="https://www.paradise.caltech.edu/ist4/lectures/shannonchess1950.pdf"
+              target="_blank"
+              >A Chess-Playing Machine</a
+            >
+          </p>
+        </li>
+        <li>
+          <strong
+            >June 10: Language Model Fine-Tuning on Scaled Survey Data for
+            Predicting Distributions of Public Opinions</strong
+          >
+          <p>
+            From:
+            <a href="https://arxiv.org/pdf/2502.16761" target="_blank"
+              >arXiv:2502.16761</a
+            >
+          </p>
+          <p>
+            Last month, I fine-tuned Qwen to improve accuracy at estimating
+            cross-national survey distributions. I showed that project to one of
+            my professors, who recommended I read this paper as they do a
+            similar experiment. It seems like their question-answer pairs looked
+            like "QUESTION: Subpopulation: AGE 65+. Survey: How important, if at
+            all, is being a gun owner to your overall identity? Options: ['Very
+            important', 'Somewhat important', 'Not too important', 'Not at all
+            important', 'Refused'] ||| ANSWER: [0.28108718, 0.235006,
+            0.27790644, 0.20600038]" and they fine-tuned the LLM to just output
+            the distribution of answers. In my experiment, we trained on
+            reasoning traces and the distribution of answers. I am somewhat
+            surprised that their method worked because, during fine-tuning on a
+            dataset of this structure, the model can only memorize answers, not
+            learn problem-solving strategies for this type of question. Clearly,
+            there's some sauce here though that I don't fully understand.
+          </p>
+          <p>
+            They use Wasserstein (Earth Mover's) distance and KL divergence as
+            their distance metrics to evaluate how similar two distributions
+            are. My experiment used Jensen-Shannon distance, and we only did
+            that because
+            <a href="https://arxiv.org/abs/2306.16388" target="_blank">
+              this Anthropic paper</a
+            >
+            did that. I think it's bad form that we blindly adopted the same
+            strategy without thinking about it, and I'd love to investigate
+            further whether one of these distance metrics is better than the
+            other.
+          </p>
+          <p>
+            Also, I found it interesting that they experience diminishing
+            marginal returns when fine-tuning on larger datasets. Specifically
+            they got 75% of best results when fine-tuning on only 25% of the
+            training dataset. This might validate my project's use of only 1300
+            train examples. I was quite worried about having a small training
+            dataset, but we ended up with quite good results. This validates our
+            observation.
+          </p>
+          <p>
+            Last thing: I think the use case they identify for this technology
+            is intriguing. They talk about social scientists using this
+            technology to probe different survey questions and populations when
+            designing experiments, and identifying which subpopulations might
+            need to be oversampled. I like that they emphasized that they aren't
+            intending to replace human data.
+          </p>
+        </li>
+        <li>
+          <strong
+            >June 11: Using Reinforcement Learning to Train Large Language
+            Models to Explain Human Decisions</strong
+          >
+          <p>
+            From:
+            <a href="https://arxiv.org/pdf/2505.11614" target="_blank"
+              >arXiv:2505.11614</a
+            >
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
+          </p>
+        </li>
+        <li>
+          <strong>June 12: Attention Is All You Need</strong>
+          <p>
+            From:
+            <a href="https://arxiv.org/abs/1706.03762" target="_blank"
+              >arXiv:1706.03762</a
+            >
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
+          </p>
+        </li>
+        <li>
+          <strong
+            >June 13: Lost in the Middle: How Language Models Use Long
+            Contexts</strong
+          >
+          <p>
+            From:
+            <a href="https://arxiv.org/abs/2307.03172" target="_blank"
+              >arXiv:2307.03172</a
+            >
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
+          </p>
+        </li>
+      </ol>
+
+      <div class="back-link">
+        <a href="index.html">← Back to Home</a>
+      </div>
+    </div>
+  </body>
+</html>

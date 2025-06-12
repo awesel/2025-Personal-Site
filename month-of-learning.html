@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Month of Learning</title>
+    <title>Coffee and Machine Learning</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap"
       rel="stylesheet"
@@ -92,11 +92,32 @@
       a:hover {
         text-decoration: underline;
       }
+
+      ul.day-meta {
+        list-style-type: none;
+        padding-left: 1.2em;
+        margin-top: 0.3em;
+        margin-bottom: 0.7em;
+      }
+      ul.day-meta li {
+        position: relative;
+        margin-bottom: 0.1em;
+        padding-left: 1em;
+        font-size: 1em;
+        line-height: 1.4;
+      }
+      ul.day-meta li::before {
+        content: "\2013"; /* en dash */
+        position: absolute;
+        left: 0;
+        color: #444;
+        font-size: 1.1em;
+      }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>Month of Learning</h1>
+      <h1>Coffee and Machine Learning</h1>
       <div class="author">Andrew Wesel</div>
 
       <p>
@@ -106,17 +127,28 @@
         read but haven't had the time. This month, I'm going to try to catch up!
       </p>
       <p>
-        This writing is somewhat selfish. It mostly will contain my own notes
-        and is not intended to be super interesting to read.
+        This writing will contain my own notes and is not intended to be super
+        interesting to read. I'm only putting it online because part of this
+        project is to talk with my friends about what I'm reading, which I think
+        having these notes online will help me do.
       </p>
-
+      <p>
+        Last note: I have a lot of free time this month. This readings seem to
+        be taking me 1-2 hours, so I will do them at coffee shops. In addition
+        to tracking what papers I read, I will also track what coffees I drink,
+        and how many people I run into serendipitously.
+      </p>
       <h2>Calendar</h2>
       <ol>
         <li>
           <strong
             >June 9: Neural networks and the multivariable Chain Rule</strong
           >
-          <p>From: Math 51 Textbook Appendix</p>
+          <ul class="day-meta">
+            <li>From: Math 51 Textbook Appendix</li>
+            <li>Vanilla Latte from Alfred Coffee in Brentwood</li>
+            <li>Number of friends seen: 6</li>
+          </ul>
           <p>
             This is my third time reading this appendix. Every time I read it, I
             learn something new, which I think either demonstrates the passage's
@@ -141,41 +173,57 @@
             >June 10: Language Model Fine-Tuning on Scaled Survey Data for
             Predicting Distributions of Public Opinions</strong
           >
-          <p>
-            From:
-            <a href="https://arxiv.org/pdf/2502.16761" target="_blank"
-              >arXiv:2502.16761</a
-            >
-          </p>
+          <ul class="day-meta">
+            <li>
+              From:
+              <a href="https://arxiv.org/pdf/2502.16761" target="_blank"
+                >arXiv:2502.16761</a
+              >
+            </li>
+            <li>Black Drip Coffee from La La Land in Santa Monica</li>
+            <li>Number of friends seen: 1</li>
+          </ul>
           <p>
             Last month, I fine-tuned Qwen to improve accuracy at estimating
             cross-national survey distributions. I showed that project to one of
             my professors, who recommended I read this paper as they do a
-            similar experiment. It seems like their question-answer pairs looked
-            like "QUESTION: Subpopulation: AGE 65+. Survey: How important, if at
-            all, is being a gun owner to your overall identity? Options: ['Very
+            similar experiment. It seems like their prompt-completion pairs
+            looked something like:
+            <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;- Prompt: You're going to fill in a
+            distribution of survey responses. Answer in brackets, where each
+            value corresponds to a percentage of respondents who chose that
+            option. Subpopulation: AGE 65+. Survey: How important, if at all, is
+            being a gun owner to your overall identity? Options: ['Very
             important', 'Somewhat important', 'Not too important', 'Not at all
-            important', 'Refused'] ||| ANSWER: [0.28108718, 0.235006,
-            0.27790644, 0.20600038]" and they fine-tuned the LLM to just output
-            the distribution of answers. In my experiment, we trained on
-            reasoning traces and the distribution of answers. I am somewhat
-            surprised that their method worked because, during fine-tuning on a
-            dataset of this structure, the model can only memorize answers, not
-            learn problem-solving strategies for this type of question. Clearly,
-            there's some sauce here though that I don't fully understand.
+            important', 'Refused']
+            <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;- Completion: [0.28108718, 0.235006,
+            0.27790644, 0.20600038]
+            <br />
+            and they fine-tuned the LLM to just output the distribution of
+            answers. In my experiment, we trained on reasoning traces and the
+            distribution of answers, not just the distribution of answers. I am
+            somewhat surprised that their method worked because, during
+            fine-tuning on a dataset of this structure, the model can only
+            memorize answers, not learn problem-solving strategies for this type
+            of question. Clearly, there's some sauce here though that I don't
+            fully understand.
           </p>
           <p>
             They use Wasserstein (Earth Mover's) distance and KL divergence as
             their distance metrics to evaluate how similar two distributions
-            are. My experiment used Jensen-Shannon distance, and we only did
-            that because
+            are. My experiment used Jensen-Shannon distance, and I only did that
+            because
             <a href="https://arxiv.org/abs/2306.16388" target="_blank">
               this Anthropic paper</a
             >
-            did that. I think it's bad form that we blindly adopted the same
+            did it. I think it's bad form that I blindly adopted the same
             strategy without thinking about it, and I'd love to investigate
             further whether one of these distance metrics is better than the
-            other.
+            other. We had some issues with JS distance being impacted by the
+            number of options in the question, even when we filled in the number
+            of options in the "log" field in Python.
           </p>
           <p>
             Also, I found it interesting that they experience diminishing
@@ -196,31 +244,115 @@
           </p>
         </li>
         <li>
-          <strong
-            >June 11: Using Reinforcement Learning to Train Large Language
-            Models to Explain Human Decisions</strong
-          >
+          <strong>June 11: Attention Is All You Need</strong>
+          <ul class="day-meta">
+            <li>
+              From:
+              <a href="https://arxiv.org/abs/1706.03762" target="_blank"
+                >arXiv:1706.03762</a
+              >
+            </li>
+            <li>Coffee: Nola from Blue Bottle in Brentwood</li>
+            <li>Number of friends seen: Not specified</li>
+          </ul>
           <p>
-            From:
-            <a href="https://arxiv.org/pdf/2505.11614" target="_blank"
-              >arXiv:2505.11614</a
-            >
+            I've learned about attention in class, but I've never actually read
+            the original paper. I assume that, in my life, I may read this paper
+            multiple times. This is just a first pass.
           </p>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
+            The first thing I investigated (just upon reading the abstract) was
+            the difference between encoder-decoder and decoder-only models. I
+            have heard people say that GPT and Llama are "decoder-only
+            transformers" but didn't really know what that meant until I saw
+            this paper talk about encoder-decoder transformers. Encoder-decoder
+            models rely on two neural networks (one each for encoding and
+            decoding). The encoder network creates a set of vectors representing
+            the input sequence. The decoder then generates tokens by looking at
+            the encoder's representation, and the tokens before it in the output
+            sequence. Decoder-only models don't distinguish between an input and
+            output sequence, they consider the input to be the beginning of the
+            output sequence, and try to complete it. This means that the
+            input/output distinction is implicit and learned by the model, not a
+            "real" attribute of a token.
+          </p>
+          <p>
+            Next is their discussion of parallizability and why transformer
+            models parallelize better than RNNs. RNNs have a hidden state that
+            is updated based on each token, requiring every prior token to be
+            done processing before processing the next. While inference in
+            (non-diffusion) transformers is autoregressive/sequential, training
+            is easily parallelizable. Transformers embed all tokens in a
+            sequence, compute key, query, and value matrices (three huge
+            matmuls), then compute the attention scores with softmax(query *
+            keyT / sqrt(d)) and the ultimate "attention-refined representation"
+            of each token by multiplying by the value matrix. Because these
+            matricies depend only on the original embedings of the input and
+            target sequences, not on intermediate outputs, they can be
+            parallelized easily, unlike with RNNs. They also give a similar
+            argument for why transformers are more efficient thant CNNs, which
+            require stacking multiple convolutional layers to gain full context
+            for a sequence.
+          </p>
+          <p>
+            The paper also explains the 'multi-head attention' mechanism. A
+            single set of key, query, and value matricies can theoretically
+            encode a lot of information due to high dimensionality, but there
+            must be some limit. Because learned parameters often have some
+            stochasticity, one can't be certain that a given instance of
+            attention values is necessarily 'correct' or ideal. Multi-head
+            attention resolves this issue by computing multiple 'heads' of
+            attention and concateinating the results. In technical language,
+            "Multi-head attention allows the model to jointly attend to
+            information from different representation subspaces at different
+            positions," which in plain english means different heads can learn
+            different things and form a rich representation when combined. Each
+            head is of a smaller dimension than the default QKV matricies, so
+            the total computation ends up being similar.
+          </p>
+          <p>
+            Since the attention mechanism only looks at how much each token
+            matters to another, not their relative position, one needs to
+            deliberately add positional information. So then FinalEmbed(token) =
+            DefaultEmbed(token) + Position(token). The vector Position(token)
+            has each value i computed with either a sin or cos depending on
+            whether token is at an even or odd position through the function
+            sin(token_position/10000^(2i/d)). I don't quite understand why they
+            alternate between sin and cos, or why they don't just use integer
+            relationships (i.e. -3 position embed means one token is 3 behind
+            another). Someday I will figure this out. I assume it has to do with
+            numbers getting too large, or because of the way dot
+            products/multiplication processes these values.
+          </p>
+          <p>
+            The rest of the paper details their experiment, and how successful
+            it was. I'll note just a few of their observations: more attention
+            heads is not always better, too-small attention size hurts quality,
+            and bigger models are better. This paper required a lot intuition
+            about linear algebra. While the actual math might have been less
+            intense than the linear algebra textbook passage, it's a lot less
+            explicit, They expect readers to be clear about matrix operations
+            and don't hand-hold through any operations, which is to be expected
+            of higher-level research. But of course, this made reading this
+            passage quite challenging. I'll come back to this paper in a few
+            weeks and see whether I can get anything more out of it.
           </p>
         </li>
         <li>
-          <strong>June 12: Attention Is All You Need</strong>
-          <p>
-            From:
-            <a href="https://arxiv.org/abs/1706.03762" target="_blank"
-              >arXiv:1706.03762</a
-            >
-          </p>
+          <strong
+            >June 12: Using Reinforcement Learning to Train Large Language
+            Models to Explain Human Decisions</strong
+          >
+          <ul class="day-meta">
+            <li>
+              From:
+              <a href="https://arxiv.org/pdf/2505.11614" target="_blank"
+                >arXiv:2505.11614</a
+              >
+            </li>
+            <li>Coffee: Not specified</li>
+            <li>Number of friends seen: Not specified</li>
+          </ul>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
@@ -233,12 +365,16 @@
             >June 13: Lost in the Middle: How Language Models Use Long
             Contexts</strong
           >
-          <p>
-            From:
-            <a href="https://arxiv.org/abs/2307.03172" target="_blank"
-              >arXiv:2307.03172</a
-            >
-          </p>
+          <ul class="day-meta">
+            <li>
+              From:
+              <a href="https://arxiv.org/abs/2307.03172" target="_blank"
+                >arXiv:2307.03172</a
+              >
+            </li>
+            <li>Coffee: Not specified</li>
+            <li>Number of friends seen: Not specified</li>
+          </ul>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim

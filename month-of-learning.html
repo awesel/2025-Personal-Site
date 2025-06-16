@@ -369,50 +369,81 @@
         </li>
         <li>
           <strong
-            >June 13: Lost in the Middle: How Language Models Use Long
-            Contexts</strong
+            >June 13: Adversarial Examples Are Not Bugs, They Are
+            Features</strong
           >
           <ul class="day-meta">
             <li>
               From:
-              <a href="https://arxiv.org/abs/2307.03172" target="_blank"
-                >arXiv:2307.03172</a
+              <a href="https://arxiv.org/abs/1905.02175" target="_blank"
+                >arXiv:1905.02175</a
               >
             </li>
-            <li>Coffee: Not specified</li>
-            <li>Number of friends seen: Not specified</li>
+            <li>Coffee: Lavazza K-Cup from my Keurig</li>
+            <li>Number of friends seen: None :(</li>
           </ul>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
+            This paper was written by my data science professor! I saw it being
+            cited in a Google red-teaming report, so I thought it must be pretty
+            relevant. The main argument is that, sometimes, ML models learn
+            "non-robust features" that are somehow highly predictive but
+            not truly representative of the label they are classifying.
+            The researchers look at image classification, which is an
+            illustrative example of this phenomenon. Viewing any natural photo,
+            the model will perform fantastically. But if one looks into the
+            features themselves, there are ways to edit photos to make the model
+            misclassify them, even when a human would not be able to tell the
+            difference.
+          </p>
+          <p>
+            One of the main takeaways is that there sometimes exists a tradeoff
+            between a model being accurate and it being comprehensible to
+            humans. If we want a Dog Classifier to accurately classify dogs, the
+            easiest way to do it might be to find some abstract pattern in the
+            noise of an image, not to learn what a dog actually is (ears, legs,
+            etc). This is a problem because, if the model's "definition" of a
+            dog is not the same as a human's, humans can't easily understand
+            what the model is doing.
+          </p>
+          <p>
+            I saw this a similar discussion in the DeepSeek-R1 paper.
+            DeepSeek-R1-Zero found, during reinforcement learning, that the best
+            way to solve math problems is to write a solution that alternates
+            between different languages, presumably English and Chinese. Rather
+            than let the model achieve maximum accuracy, the researchers added a
+            reward for the model to write solutions in a single language. If I
+            was given this choice, I don't know what I would do. To achieve
+            superintelligence, I feel that we have to, almost by definition, let
+            AI do some stuff that we don't fully understand. This is one
+            interpretation of The Bitter Lesson- we shouldn't put human
+            knowledge on a pedestal, we should just run huge searches and see
+            what comes up.
+          </p>
+          <p>
+            On the other hand, I totally understand why, for safety reasons, we
+            might want to be able to easily observe the manner by which a
+            language model reaches its conclusions. Obviously, I don't really
+            have a solution to this trade-off, I think it's important to
+            recognize that it exists, though.
           </p>
         </li>
         <li>
           <strong
-            >June 14: Using Reinforcement Learning to Train Large Language
-            Models to Explain Human Decisions</strong
-          >
-          <ul class="day-meta">
-            <li>
-              From:<a href="https://arxiv.org/pdf/2505.11614" target="_blank"
-                >arxiv:2505.11614</a
-              >
-            </li>
-            <li>Coffee:</li>
-            <li>Number of friends seen:</li>
-          </ul>
-          <p>
-            I'm super excited about this paper. Social science is as concerned
-            with what people do as with why they do it, so I think it's awesome
-            that these researchers are looking for accurate explanations for
-            behavior as well as replicating it properly. Also, from the ML side,
-            I haven't seen people use reinforcement learning for this kind of
-            task, and I'm curious to see how it works and what kinds of emergent
-            behavior it can produce.
-          </p>
+            >June 14: Godel Escher Bach Preface</strong>
         </li>
+          <p>
+            I started this book today. Since I'm a nerdy computer guy interested in consciousness, I feel like I am supposed to read this sometime soon. My discrete math professor recommended it to the class (some of our problems were based on the book) and I really enjoyed that class.
+          </p>
+          <p> The preface clarifies some common misconceptions about the book, it's true meaning, and its structure. I think it's promising that the book focuses so much on metaphor (from what I understand, the dialogues are all metaphors for themes). I know that I learn well from metaphor, so this book may be very good for me.</p>
+        </li>
+        <li>
+            <strong
+              >June 15: Chapter 1</strong>
+          </li>
+            <p> This chapter concerns paradoxes in self-referential statements. There's a strong connection being drawn between mathematical statements that reference themselves paradoxically, Escher drawings that illustrate paradoxes, musical self reference (theme and variation), and the way that conscious beings reference themselves. This observation is already quite profound to me.
+              </p>
+          </li>
+        
       </ol>
 
       <div class="back-link">

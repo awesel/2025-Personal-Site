@@ -1,0 +1,24 @@
+<li>
+          <strong
+            >June 15: Using Reinforcement Learning to Train Large Language
+            Models to Explain Human Decisions</strong
+          >
+          <ul class="day-meta">
+            <li>
+              From:<a href="https://arxiv.org/pdf/2505.11614" target="_blank"
+                >arxiv:2505.11614</a
+              >
+            </li>
+            <li>Coffee:</li>
+            <li>Number of friends seen:</li>
+          </ul>
+          <p>
+            I'm super excited about this paper. Social science is as concerned
+            with what people do as with why they do it, so I think it's awesome
+            that these researchers are looking for accurate explanations for
+            behavior as well as replicating it properly. Also, from the ML side,
+            I haven't seen people use reinforcement learning for this kind of
+            task, and I'm curious to see how it works and what kinds of emergent
+            behavior it can produce.
+          </p>
+        </li>

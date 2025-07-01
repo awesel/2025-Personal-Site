@@ -1,0 +1,4 @@
+<Files "*.mp4">
+    Header set Content-Disposition "attachment"
+    Header set Content-Type "video/mp4"
+</Files> 

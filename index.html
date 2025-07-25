@@ -3,12 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home</title>
+    <title>Andrew</title>
+    <!-- Load a clean, modern typeface similar to the existing site -->
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap"
       rel="stylesheet"
     />
     <style>
+      /* Preserve the minimalist aesthetic of the original site */
       body {
         margin: 0;
         padding: 0;
@@ -19,19 +21,41 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        min-height: 100vh;
       }
 
       .container {
-        flex-wrap: wrap; /* Allow content to wrap on smaller screens */
-        max-width: 800px;
+        max-width: 900px;
         padding: 20px;
         display: flex;
-        align-items: center;
+        flex-wrap: wrap;
+        align-items: flex-start;
+      }
+
+      .headshot {
+        width: 100%;
+        max-width: 400px;
+        margin-right: 0;
+        margin-bottom: 20px;
+      }
+
+      .headshot img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      @media (min-width: 769px) {
+        .headshot {
+          margin-right: 30px;
+          margin-bottom: 0;
+        }
       }
 
       .text {
-        max-width: 100%; /* Allow text to span the full width if necessary */
+        max-width: 100%;
+        flex: 1;
       }
 
       h1 {
@@ -45,8 +69,33 @@
         margin-bottom: 1em;
       }
 
+      h2 {
+        margin-top: 1.5em;
+        font-size: 1.4em;
+      }
+
+      ul.recent-projects {
+        padding-left: 1.2em;
+        margin-top: 0.5em;
+        margin-bottom: 1.5em;
+      }
+
+      ul.recent-projects li {
+        margin-bottom: 0.6em;
+      }
+
+      ul.recent-projects a {
+        color: #0000ee;
+        text-decoration: none;
+      }
+
+      ul.recent-projects a:hover {
+        text-decoration: underline;
+      }
+
       .social-links {
         margin-top: 1em;
+        font-size: 0.95em;
       }
 
       .social-links a {
@@ -57,46 +106,53 @@
       .social-links a:hover {
         text-decoration: underline;
       }
-      .headshot {
-        width: 100%;
-        max-width: 400px; /* Ensures the image doesn't stretch too much */
-        height: auto; /* Maintains the aspect ratio */
-        margin-right: 0;
-        margin-bottom: 20px;
-      }
-
-      @media (min-width: 769px) {
-        .headshot {
-          width: 400px; /* Keeps the image size consistent for larger screens */
-          height: 400px; /* Adjust this to maintain a square shape if desired */
-          margin-right: 20px;
-          margin-bottom: 0;
-        }
-      }
     </style>
   </head>
   <body>
     <div class="container">
+      <!-- Use the existing Andrew headshot image; this assumes the image lives in an images folder -->
       <div class="headshot">
-        <img
-          src="images/Andrew.png"
-          alt="Headshot"
-          style="width: 100%; height: auto; object-fit: cover"
-        />
+        <img src="images/Andrew.png" alt="Andrew Wesel" />
       </div>
       <div class="text">
         <h1>Hi, I'm Andrew!</h1>
+        <!-- Updated byline: longer description split into sentences -->
         <p>
-          I'm studying computer science at Stanford and will be joining
-          <a href="https://ceramic.ai">Ceramic</a> this summer to work on LLM
-          training efficiency!
+          I study computer science at Stanford and work as an ML engineer at
+          <a href="https://ceramic.ai" target="_blank">ceramic.ai</a>. I'm also
+          a Project Manager for Stanford Management Group, where I've consulted
+          on AI strategy for Google Pixel and Hitachi Energy.
         </p>
 
+        <h2>What I’ve built recently</h2>
+        <ul class="recent-projects">
+          <li>
+            <a href="surveysimulator.html"
+              >A language model that predicts national survey responses</a
+            >
+          </li>
+          <li>
+            <a href="https://munch-club.com" target="_blank"
+              >Munch Club: AI‑first nutrition log</a
+            >
+          </li>
+          <li>
+            <a href="https://symbi.club" target="_blank"
+              >Symbi: peer‑learning for Stanford students</a
+            >
+          </li>
+          <li>
+            <a href="https://depicto.ai" target="_blank"
+              >Depicto: daily puzzle game with AI‑generated images</a
+            >
+          </li>
+        </ul>
+
+        <!-- Social and site navigation links -->
         <div class="social-links">
-          <a href="files/resume.pdf" target="_blank" style="color: blue"
-            >Resume</a
-          >
-          | <a href="https://github.com/awesel" target="_blank">GitHub</a> |
+          <a href="files/resume.pdf" target="_blank">Resume</a> |
+          <a href="https://github.com/awesel" target="_blank">GitHub</a>
+          |
           <a href="https://linkedin.com/in/awesel" target="_blank">LinkedIn</a>
           |
           <a href="mailto:awesel@stanford.edu">Email</a> |

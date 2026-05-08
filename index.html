@@ -3,131 +3,243 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Andrew</title>
-    <!-- Load a clean, modern typeface similar to the existing site -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap"
-      rel="stylesheet"
-    />
+    <title>Andrew Wesel</title>
     <style>
-      /* Preserve the minimalist aesthetic of the original site */
       body {
         margin: 0;
-        padding: 0;
+        padding: 24px 20px 48px;
         font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          "Helvetica Neue", Arial, sans-serif;
+          "Times New Roman",
+          Times,
+          "Liberation Serif",
+          serif;
+        font-size: 16px;
+        line-height: 1.45;
         background-color: #ffffff;
         color: #000000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
       }
 
       .container {
-        max-width: 900px;
-        padding: 20px;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: flex-start;
-      }
-
-      .headshot {
-        width: 100%;
-        max-width: 400px;
-        margin-right: 0;
-        margin-bottom: 20px;
-      }
-
-      .headshot img {
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-        border-radius: 8px;
-      }
-
-      @media (min-width: 769px) {
-        .headshot {
-          margin-right: 30px;
-          margin-bottom: 0;
-        }
-      }
-
-      .text {
-        max-width: 100%;
-        flex: 1;
+        max-width: 640px;
+        margin: 0 auto;
       }
 
       h1 {
-        font-size: 2em;
-        margin-bottom: 0.5em;
+        font-size: 1.5rem;
+        font-weight: normal;
+        margin: 0 0 0.35em;
       }
 
-      p {
-        font-size: 1em;
-        line-height: 1.5;
-        margin-bottom: 1em;
+      .role {
+        margin: 0 0 1.25em;
+        font-size: 1rem;
       }
 
-      h2 {
+      p,
+      .body-paragraph {
+        margin: 0 0 1em;
+      }
+
+      a {
+        color: #0000ee;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      em {
+        font-style: italic;
+      }
+
+      .hover-tip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+        text-decoration: none;
+        cursor: help;
+      }
+
+      .hover-tip .hover-pop {
+        display: none;
+        position: absolute;
+        left: 50%;
+        bottom: calc(100% + 12px);
+        transform: translateX(-50%);
+        z-index: 20;
+        width: min(300px, calc(100vw - 32px));
+        max-width: min(300px, calc(100vw - 32px));
+        padding: 0;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background: #fff;
+        box-shadow:
+          0 4px 14px rgba(0, 0, 0, 0.12),
+          0 0 0 1px rgba(0, 0, 0, 0.04);
+        font-size: 0.875rem;
+        line-height: 1.45;
+        pointer-events: none;
+      }
+
+      .hover-tip .hover-pop.text-only {
+        padding: 12px 14px;
+        pointer-events: auto;
+      }
+
+      .hover-tip .hover-pop.text-only a {
+        pointer-events: auto;
+      }
+
+      .hover-figure {
+        margin: 0;
+      }
+
+      .hover-figure img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 6px 6px 0 0;
+      }
+
+      .hover-figure.jacket-shot img {
+        background: #f3f3f3;
+      }
+
+      .hover-figure figcaption {
+        margin: 0;
+        padding: 10px 12px 12px;
+        font-size: 0.8125rem;
+        line-height: 1.4;
+        color: #333;
+        background: #fafafa;
+        border-top: 1px solid #eee;
+        border-radius: 0 0 6px 6px;
+      }
+
+      .hover-tip:hover .hover-pop {
+        display: block;
+      }
+
+      /* Reading tooltip: keep keyboard access to links inside */
+      .hover-tip.hover-tip--menu:focus-within .hover-pop {
+        display: block;
+      }
+
+      .hover-tip .book-list {
+        margin: 0;
+        padding-left: 1.15em;
+      }
+
+      .hover-tip .book-list li {
+        margin-bottom: 0.35em;
+      }
+
+      .hover-tip .book-list li:last-child {
+        margin-bottom: 0;
+      }
+
+      .footer-contact {
         margin-top: 1.5em;
-        font-size: 1.4em;
-      }
-
-      ul.recent-projects {
-        padding-left: 1.2em;
-        margin-top: 0.5em;
-        margin-bottom: 1.5em;
-      }
-
-      ul.recent-projects li {
-        margin-bottom: 0.6em;
-      }
-
-      ul.recent-projects a {
-        color: #0000ee;
-        text-decoration: none;
-      }
-
-      ul.recent-projects a:hover {
-        text-decoration: underline;
-      }
-
-      .social-links {
-        margin-top: 1em;
-        font-size: 0.95em;
-      }
-
-      .social-links a {
-        text-decoration: none;
-        color: #0000ee;
-      }
-
-      .social-links a:hover {
-        text-decoration: underline;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <!-- Use the existing Andrew headshot image; this assumes the image lives in an images folder -->
-      <div class="headshot">
-        <img src="images/Andrew2.png" alt="Andrew Wesel" />
+      <h1>Andrew Wesel</h1>
+      <p class="role">
+        Member of Technical Staff at
+        <a href="https://simile.ai" target="_blank" rel="noopener noreferrer">Simile</a>
+      </p>
+
+      <p>
+        I am curious about decision-making: why do people make the decisions that they do, can we train
+        models that mimic or understand human behavior, and how can we build systems that help people make
+        good decisions?
+      </p>
+      <p>
+        At Simile, I work on training and serving language models that help people make good decisions.
+        There are a variety of problems that these models solve: we can simulate human-like speech from a
+        diverse set of plausible viewpoints, we can predict what behaviors different sets of people will do
+        in a certain scenario, and we can
+        <em>orchestrate</em>
+        large amounts of these simulations and predictions into an observable parallel universe. I am very
+        grateful to be mentored by Percy Liang, Michael Bernstein, and Joon Sung Park.
+      </p>
+      <div class="body-paragraph">
+        Outside of work, I love
+        <div class="hover-tip">
+          tacos
+          <div class="hover-pop">
+            <figure class="hover-figure">
+              <img src="images/favorite-taco.jpg" alt="Favorite taco" loading="lazy" decoding="async" />
+              <figcaption>Brother&apos;s Cousins tacos in my hometown, Los Angeles.</figcaption>
+            </figure>
+          </div>
+        </div>,
+        cortados, hiking/biking/running/lifting,
+        <div class="hover-tip">
+          making steaks
+          <div class="hover-pop">
+            <figure class="hover-figure">
+              <img src="images/best-steak.jpg" alt="Steak" loading="lazy" decoding="async" />
+              <figcaption>One of my better home-cooked steaks.</figcaption>
+            </figure>
+          </div>
+        </div>,
+        <div class="hover-tip hover-tip--menu" tabindex="0">
+          reading
+          <div class="hover-pop text-only">
+            Recent favorites:
+            <ul class="book-list">
+              <li>
+                <a
+                  href="https://en.wikipedia.org/wiki/G%C3%B6del,_Escher,_Bach"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Gödel, Escher, Bach</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://en.wikipedia.org/wiki/An_Investigation_of_the_Laws_of_Thought"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >The Laws of Thought</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://en.wikipedia.org/wiki/Noise:_A_Flaw_in_Human_Judgment"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Noise</a
+                >
+              </li>
+              <li>
+                Currently reading
+                <a href="https://systemerrorbook.com/" target="_blank" rel="noopener noreferrer">System Error</a>.
+              </li>
+            </ul>
+          </div>
+        </div>,
+        and pretending like I have niche taste in music and
+        <div class="hover-tip">
+          clothes
+          <div class="hover-pop">
+            <figure class="hover-figure jacket-shot">
+              <img src="images/favorite-jacket.png" alt="Favorite jacket" loading="lazy" decoding="async" />
+              <figcaption>A favorite jacket.</figcaption>
+            </figure>
+          </div>
+        </div>.
       </div>
-      <div class="text">
-        <h1>Hi, I'm Andrew!</h1>
-        <ul class="recent-projects" style="margin-bottom: 1em">
-          <li>
-            I am taking time off Stanford to work at
-            <a href="https://simile.ai" target="_blank">simile.ai.</a>
-          </li>
-          <li>
-            Last summer, I did LLM architecture research at
-            <a href="https://ceramic.ai" target="_blank">ceramic.ai</a>.
-          </li>
-        </ul>
-      </div>
+
+      <p class="footer-contact">
+        Please feel free to
+        <a href="mailto:awesel@stanford.edu">talk to me</a>
+        or
+        <a href="https://x.com/wesel0" target="_blank" rel="noopener noreferrer">tweet at me</a>!
+      </p>
     </div>
   </body>
 </html>

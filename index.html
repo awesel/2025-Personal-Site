@@ -56,6 +56,21 @@
         cursor: help;
       }
 
+      .hover-tip > a {
+        color: #0000ee;
+        text-decoration: none;
+        border-bottom: 1px dotted #333;
+        cursor: help;
+      }
+
+      .hover-tip > a:hover {
+        text-decoration: underline;
+      }
+
+      .hover-tip:has(> a) {
+        border-bottom: none;
+      }
+
       .hover-tip .hover-pop {
         display: none;
         position: absolute;
@@ -244,7 +259,27 @@
             </ul>
           </div>
         </div>
-        , and pretending like I have niche taste in music and
+        , and pretending like I have niche taste in
+        <div class="hover-tip">
+          <a
+            href="https://open.spotify.com/album/2cEL04tddUszYFy6tEM1rI?si=1W-VzCZzQs-iNjlNPVd47g"
+            target="_blank"
+            rel="noopener noreferrer"
+            >music</a
+          >
+          <div class="hover-pop">
+            <figure class="hover-figure">
+              <img
+                src="images/cold-visions-album.png"
+                alt="Cold Visions album"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption>My favorite album.</figcaption>
+            </figure>
+          </div>
+        </div>
+        and
         <div class="hover-tip">
           clothes
           <div class="hover-pop">

@@ -16,19 +16,49 @@
       }
 
       .container {
-        max-width: 640px;
+        max-width: 960px;
         margin: 0 auto;
+        display: flex;
+        gap: 48px;
+        align-items: flex-start;
+      }
+
+      .left {
+        flex: 0 0 320px;
+      }
+
+      .right {
+        flex: 1 1 0;
+        min-width: 0;
+      }
+
+      @media (max-width: 720px) {
+        .container {
+          flex-direction: column;
+          gap: 0;
+        }
+
+        .left {
+          flex: none;
+          width: 100%;
+          margin-top: 2em;
+        }
+
+        .right {
+          order: -1;
+        }
       }
 
       h1 {
         font-size: 1.5rem;
         font-weight: normal;
-        margin: 0 0 0.35em;
+        margin: 0 0 1em;
       }
 
-      .role {
-        margin: 0 0 1.25em;
-        font-size: 1rem;
+      hr {
+        border: 0;
+        border-top: 1px solid #000000;
+        margin: 1.5em 0;
       }
 
       p {
@@ -47,51 +77,104 @@
         font-style: italic;
       }
 
-      .footer-contact {
-        margin-top: 1.5em;
+      figure {
+        margin: 0;
+      }
+
+      figure img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      figcaption {
+        margin-top: 0.5em;
+      }
+
+      ul.updates {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      ul.updates li {
+        margin: 0 0 0.35em;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>Andrew Wesel</h1>
-      <p class="role">
-        Member of Technical Staff at
-        <a href="https://simile.ai" target="_blank" rel="noopener noreferrer"
-          >Simile</a
-        >
-      </p>
+      <div class="left">
+        <figure>
+          <img
+            src="images/steinberg-1948.jpg"
+            alt="Saul Steinberg line drawing, 1948, of a figure drawing a spiral around itself"
+          />
+          <figcaption>A photo that I find amusing</figcaption>
+        </figure>
 
-      <p>
-        I am curious about decision-making: why do people make the decisions
-        that they do, can we train models that mimic and understand human
-        behavior, and can we build systems that help people and
-        organizations make good decisions?
-      </p>
-      <p>
-        At Simile, I work on training, evaluating, and serving our language
-        models. There are a variety of problems that these models solve: we
-        simulate human-like speech from a diverse set of plausible viewpoints,
-        we predict what the distribution of behaviors will be for groups of
-        people in arbitrary scenarios, and we
-        <em>orchestrate</em>
-        large amounts of these individual simulations and predictions into an
-        observable parallel universe. I am very grateful to be mentored by Percy
-        Liang.
-      </p>
-      <p>
-        In my spare time, I am also trying to finish my undergrad degree at
-        Stanford.
-      </p>
+        <hr />
+        <ul class="updates">
+          <li>
+            08/26:
+            <a href="https://www.simile.com/blog/confidence" target="_blank" rel="noopener noreferrer"
+              >Building confidence in Simile</a
+            >
+          </li>
+          <li>
+            07/26:
+            <a href="https://www.nytimes.com/2026/07/30/business/dealbook/simile-ai-agents-funding.html" target="_blank" rel="noopener noreferrer"
+              >Simile in NYT</a
+            > :)
+          </li>
+          <li>
+            09/25:
+            <a href="https://www.ceramic.ai/blog/language-models-are-getting-harder-to-kill" target="_blank" rel="noopener noreferrer"
+              >Super weights in MoE language models</a
+            >
+          </li>
+          <li>
+            06/25:
+            <a href="beyond-being-human.html">Beyond being human</a>
+          </li>
+          <li>
+            02/25:
+            <a href="https://aaas.confex.com/aaas/2025/meetingapp.cgi/Paper/35157" target="_blank" rel="noopener noreferrer"
+              >Linguistic analysis of crowdsourced fact-checking</a
+            >
+          </li>
+        </ul>
+      </div>
 
-      <p class="footer-contact">
-        Please feel free to
-        <a href="mailto:awesel@stanford.edu">talk to me</a>
-        or
-        <a href="https://x.com/wesel0" target="_blank" rel="noopener noreferrer"
-          >tweet at me</a
-        >!
-      </p>
+      <div class="right">
+        <h1>Andrew Wesel</h1>
+
+        <p>
+          I am curious about decision-making and deep learning: why do people make the decisions
+          that they do, can we train models that mimic and understand human
+          behavior, and can we build systems that help
+          people, agents, organizations, and society make good decisions?
+        </p>
+        <p>
+          I am also quite amused by self-reference, slant rhyme, alliteration,
+          free will, consciousness, chess, cheese, and ambient music, but I
+          wouldn’t consider these to be formal academic interests.
+        </p>
+        <p>
+          Some days of the week, I am a member of technical staff at
+          <a href="https://simile.ai" target="_blank" rel="noopener noreferrer"
+            >Simile</a
+          >. I was the first full-time employee on Simile’s “modeling” team, which
+          has since fortunately grown into a fierce and talented crew of researchers.
+        </p>
+        <p>
+          Other days, I am trying to finish my undergrad degree at Stanford.
+        </p>
+        <p>
+          Please <a href="mailto:awesel@stanford.edu">email me</a> if you would
+          like to talk!
+        </p>
+      </div>
     </div>
   </body>
 </html>

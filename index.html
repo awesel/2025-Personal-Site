@@ -105,13 +105,40 @@
   <body>
     <div class="container">
       <div class="left">
-        <figure>
+        <figure id="artwork">
           <img
+            id="artwork-img"
             src="images/steinberg-1948.jpg"
             alt="Saul Steinberg line drawing, 1948, of a figure drawing a spiral around itself"
           />
-          <figcaption>A photo that I find amusing</figcaption>
+          <figcaption id="artwork-caption">A photo that I find amusing</figcaption>
         </figure>
+        <script>
+          (function () {
+            var artworks = [
+              {
+                src: "images/steinberg-1948.jpg",
+                alt: "Saul Steinberg line drawing, 1948, of a figure drawing a spiral around itself",
+                caption: "A photo that I find amusing",
+              },
+              {
+                src: "images/kandinsky-bleu-de-ciel.jpg",
+                alt: "Wassily Kandinsky, Bleu de ciel, 1940: colorful floating creatures on a sky-blue field",
+                caption: "My favorite artwork in my dorm",
+              },
+              {
+                src: "images/albums-2026.jpg",
+                alt: "Two album covers stacked with a slight offset",
+                caption: "What I am listening to nowadays",
+              },
+            ];
+            var pick = artworks[Math.floor(Math.random() * artworks.length)];
+            var img = document.getElementById("artwork-img");
+            img.src = pick.src;
+            img.alt = pick.alt;
+            document.getElementById("artwork-caption").textContent = pick.caption;
+          })();
+        </script>
 
         <hr />
         <ul class="updates">

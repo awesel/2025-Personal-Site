@@ -185,7 +185,7 @@
               document.getElementById("artwork-img-b"),
             ];
             var caption = document.getElementById("artwork-caption");
-            var current = Math.floor(Math.random() * artworks.length);
+            var current = 0; // always start on the Steinberg
             var front = 0;
             var busy = false;
             var timer;
@@ -207,7 +207,7 @@
             function next() {
               if (busy) return;
               busy = true;
-              var nextIdx = (current + 1 + Math.floor(Math.random() * (artworks.length - 1))) % artworks.length;
+              var nextIdx = (current + 1) % artworks.length;
               var outEl = imgs[front];
               var inEl = imgs[1 - front];
 

@@ -25,6 +25,7 @@
 
       .left {
         flex: 0 0 320px;
+        min-width: 0; /* keep 320px even when an update line runs long */
       }
 
       .right {
@@ -136,6 +137,14 @@
 
       ul.updates li {
         margin: 0 0 0.35em;
+        white-space: nowrap; /* let long titles run past the column edge */
+      }
+
+      /* below this the right column's text reaches down to the updates */
+      @media (max-width: 880px) {
+        ul.updates li {
+          white-space: normal;
+        }
       }
     </style>
   </head>
@@ -260,7 +269,7 @@
             08/26:
             <a href="https://www.simile.com/blog/confidence" target="_blank" rel="noopener noreferrer"
               >Building confidence in Simile</a
-            >
+            > (with Sarah Chen and Percy Liang)
           </li>
           <li>
             07/26:
@@ -277,6 +286,10 @@
           <li>
             06/25:
             <a href="beyond-being-human.html">Beyond being human</a>
+          </li>
+          <li>
+            05/25:
+            <a href="surveysimulator.html">Training LLMs to predict national survey results</a>
           </li>
           <li>
             02/25:

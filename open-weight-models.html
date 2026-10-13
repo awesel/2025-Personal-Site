@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inconvenient argument against powerful open-weight models</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 24px 20px 48px;
+        font-family: "Times New Roman", Times, "Liberation Serif", serif;
+        font-size: 16px;
+        line-height: 1.45;
+        background-color: #ffffff;
+        color: #000000;
+      }
+
+      .container {
+        max-width: 640px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+        font-weight: normal;
+        margin: 0 0 1em;
+      }
+
+      p {
+        margin: 0 0 1em;
+      }
+
+      a {
+        color: #0000ee;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      em {
+        font-style: italic;
+      }
+
+      ol {
+        margin: 0 0 1em;
+        padding-left: 1.5em;
+      }
+
+      ol ol {
+        margin: 0.25em 0 0;
+        list-style-type: lower-alpha;
+      }
+
+      li {
+        margin: 0 0 0.35em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Inconvenient argument against powerful open-weight models</h1>
+
+      <p>
+        I love open-weight models and use them every day. My job involves
+        post-training large and capable open-weight models, much of the most
+        interesting science studies these models, and I am generally
+        appreciative of the market dynamics created by multiple providers
+        serving the same weights.
+      </p>
+
+      <p>
+        However, I find it difficult to convince myself that, in the limit,
+        powerful open-weight models will be good for the world.
+      </p>
+
+      <p>The argument:</p>
+
+      <ol>
+        <li>
+          There are some tasks that we do not want language models to do, as
+          they are obvious legal and/or ethical violations.
+          <ol>
+            <li>Make bioweapon</li>
+            <li>Hack website</li>
+            <li>Plan murder</li>
+            <li>Commit fraud</li>
+          </ol>
+        </li>
+        <li>
+          Language models are very powerful and will continue to get more
+          powerful, including on tasks that we do not want them to be good at.
+        </li>
+        <li>
+          Open-weight models are uniquely difficult to prevent from enabling
+          harmful tasks.
+          <ol>
+            <li>
+              It is impossible to take back weights once they are released,
+              giving bad actors an infinite amount of time to design attacks
+              against even very-well-aligned models.
+            </li>
+            <li>It is impossible to monitor what people do with compute they own.</li>
+          </ol>
+        </li>
+        <li>
+          Therefore, any “regulation” will not be able to reasonably prevent
+          bad actors from doing what they want, given that they have access to
+          an open model.
+        </li>
+      </ol>
+
+      <p>
+        Given that open models cannot be prevented from taking harmful actions
+        at a user’s will, they present significant marginal risk over the
+        presence of powerful closed models that can be monitored and regulated
+        by their providers.
+      </p>
+    </div>
+  </body>
+</html>

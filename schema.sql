@@ -8,3 +8,10 @@ CREATE TABLE IF NOT EXISTS rounds (
   created_at INTEGER NOT NULL,
   PRIMARY KEY (round_key, player_id)
 );
+
+-- Recent submission attempts per hashed IP, for rate limiting; rows older than the window are deleted.
+CREATE TABLE IF NOT EXISTS submit_attempts (
+  ip_hash      TEXT NOT NULL,
+  attempted_at INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS submit_attempts_by_ip ON submit_attempts (ip_hash, attempted_at);

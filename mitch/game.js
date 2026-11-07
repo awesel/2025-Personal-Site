@@ -5,6 +5,7 @@ import { evenSplit, setShare } from './split.js';
 const API = '/api/mitch';
 const NAME_KEY = 'mitch-name';
 const LIVE_REFRESH_MS = 30_000;
+const TURNSTILE_SITE_KEY = '0x4AAAAAAF34fCDGZI61BvGn';
 
 const $ = (id) => document.getElementById(id);
 
@@ -69,6 +70,20 @@ async function request(day, init) {
   }
 }
 
+let turnstileReady = null;
+
+function loadTurnstile() {
+  turnstileReady ??= new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    script.async = true;
+    script.onload = () => resolve(window.turnstile);
+    script.onerror = () => reject(new Error('Could not load the human check.'));
+    document.head.append(script);
+  });
+  return turnstileReady;
+}
+
 // --- rendering -------------------------------------------------------------
 
 function dayImage(question) {
@@ -110,28 +125,29 @@ function optionBars(options, series) {
   );
 }
 
-function nameCell(row, myId) {
-  return row.id === myId ? h('mark', {}, `${row.name} (you)`) : row.name;
+function nameCell(name, isMe) {
+  return isMe ? h('mark', {}, `${name} (you)`) : name;
 }
 
 const LEADERBOARD_SIZE = 10;
 
 /** All rows, or the top rows plus the player's own row after a gap when they rank below them. */
-function visibleRows(rows, myId, showAll) {
+function visibleRows(rows, showAll) {
   const ranked = rows.map((row, i) => ({ row, rank: i + 1 }));
   if (showAll) return ranked;
   const top = ranked.slice(0, LEADERBOARD_SIZE);
-  const mine = ranked.find((item) => item.row.id === myId);
+  const mine = ranked.find((item) => item.row.you);
   return mine && mine.rank > LEADERBOARD_SIZE ? [...top, null, mine] : top;
 }
 
-function leaderboardList(rows, myId) {
+/** Today's leaderboard from the server: `{ name, tvd, you }` rows, best first. */
+function leaderboardList(rows) {
   const list = h(
     'ol',
     {},
-    visibleRows(rows, myId, state.showAllLeaderboard).map((item) =>
+    visibleRows(rows, state.showAllLeaderboard).map((item) =>
       item
-        ? h('li', { value: item.rank }, nameCell(item.row, myId), `: ${score(item.row.tvd)}`)
+        ? h('li', { value: item.rank }, nameCell(item.row.name, item.row.you), `: ${score(item.row.tvd)}`)
         : h('li', { style: 'list-style: none' }, '...'),
     ),
   );
@@ -162,7 +178,8 @@ function answerPicker(question, onPick) {
 }
 
 function guessForm(question, answer, { onBack, onSubmit, error, submitting }) {
-  let shares = evenSplit(question.options.length);
+  state.shares ??= evenSplit(question.options.length);
+  let shares = state.shares;
   const sliders = [];
   const labels = [];
 
@@ -181,6 +198,7 @@ function guessForm(question, answer, { onBack, onSubmit, error, submitting }) {
       'aria-label': `Share who answer ${option}`,
       oninput: (e) => {
         shares = setShare(shares, i, Number(e.target.value));
+        state.shares = shares;
         refresh();
       },
     });
@@ -197,6 +215,29 @@ function guessForm(question, answer, { onBack, onSubmit, error, submitting }) {
     'aria-label': 'Your name',
   });
 
+  // Tokens are single-use, so every render of the form gets a fresh check.
+  let turnstileToken = null;
+  const check = h('div');
+  const checkError = h('p');
+  if (!submitting) {
+    loadTurnstile()
+      .then((turnstile) =>
+        turnstile.render(check, {
+          sitekey: TURNSTILE_SITE_KEY,
+          callback: (token) => {
+            turnstileToken = token;
+            checkError.textContent = '';
+          },
+          'expired-callback': () => {
+            turnstileToken = null;
+          },
+        }),
+      )
+      .catch((err) => {
+        checkError.textContent = `Error: ${err.message}`;
+      });
+  }
+
   const form = h(
     'form',
     {
@@ -204,8 +245,12 @@ function guessForm(question, answer, { onBack, onSubmit, error, submitting }) {
         e.preventDefault();
         const name = nameInput.value.trim();
         if (!name) return;
+        if (!turnstileToken) {
+          checkError.textContent = 'Please wait for the human check to finish.';
+          return;
+        }
         localStorage.setItem(NAME_KEY, name);
-        onSubmit(name, shares);
+        onSubmit(name, shares, turnstileToken);
       },
     },
     h(
@@ -218,6 +263,8 @@ function guessForm(question, answer, { onBack, onSubmit, error, submitting }) {
     ),
     h('table', {}, h('tbody', {}, rows)),
     h('p', {}, h('label', {}, 'Name on the leaderboard: ', nameInput)),
+    check,
+    checkError,
     error ? h('p', {}, `Error: ${error}`) : null,
     h(
       'p',
@@ -230,23 +277,23 @@ function guessForm(question, answer, { onBack, onSubmit, error, submitting }) {
   return form;
 }
 
-function todayResults(question, entries, myId) {
-  const me = entries.find((e) => e.id === myId);
-  const rows = leaderboard(entries, question.options.length);
-  const myGuess = me ? guessShares(me.play) : null;
+function todayResults(question, round) {
+  const rows = round.leaderboard ?? [];
+  const myPlay = validEntries([round.mine], question.options.length)[0]?.play;
+  const myGuess = myPlay ? guessShares(myPlay) : null;
 
   return [
-    rows.some((r) => r.id === myId) ? null : h('p', {}, 'Your score appears once someone else has played.'),
-    me
+    rows.some((r) => r.you) ? null : h('p', {}, 'Your score appears once someone else has played.'),
+    myPlay
       ? h(
           'p',
           {},
           'You answered ',
-          h('i', {}, question.options[me.play.answer]),
+          h('i', {}, question.options[myPlay.answer]),
           ` and guessed ${question.options.map((o, i) => `${o} ${Math.round(myGuess[i] * 100)}%`).join(', ')}.`,
         )
       : null,
-    rows.length ? [h('h3', {}, "Today's leaderboard"), leaderboardList(rows, myId)] : null,
+    rows.length ? [h('h3', {}, "Today's leaderboard"), leaderboardList(rows)] : null,
     h(
       'p',
       { className: 'small' },
@@ -294,6 +341,7 @@ const state = {
   submitting: false,
   error: null,
   past: null,
+  shares: null,
   showAllLeaderboard: false,
 };
 
@@ -311,7 +359,7 @@ function renderPanel() {
     return;
   }
   if (state.round.mine) {
-    panel.replaceChildren(...[todayResults(question, validEntries(state.round.entries ?? [], question.options.length), myId())].flat(3).filter(Boolean));
+    panel.replaceChildren(...[todayResults(question, state.round)].flat(3).filter(Boolean));
   } else if (state.answer === null) {
     panel.replaceChildren(
       ...answerPicker(question, (i) => {
@@ -326,6 +374,7 @@ function renderPanel() {
         submitting: state.submitting,
         onBack: () => {
           state.answer = null;
+          state.shares = null;
           state.error = null;
           renderPanel();
         },
@@ -383,14 +432,14 @@ async function loadPast() {
   );
 }
 
-async function submit(name, prediction) {
+async function submit(name, prediction, turnstileToken) {
   state.submitting = true;
   state.error = null;
   renderPanel();
   const result = await request(state.today, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ name, payload: { v: 1, answer: state.answer, prediction } }),
+    body: JSON.stringify({ name, payload: { v: 1, answer: state.answer, prediction }, turnstileToken }),
   });
   state.submitting = false;
   if (result.ok) {

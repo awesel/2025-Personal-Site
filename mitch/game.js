@@ -109,23 +109,38 @@ function nameCell(row, myId) {
 
 const LEADERBOARD_SIZE = 10;
 
-/** The top rows, plus the player's own row after a gap when they rank below them. */
-function visibleRows(rows, myId) {
-  const top = rows.slice(0, LEADERBOARD_SIZE).map((row, i) => ({ row, rank: i + 1 }));
-  const myRank = rows.findIndex((r) => r.id === myId);
-  return myRank >= LEADERBOARD_SIZE ? [...top, null, { row: rows[myRank], rank: myRank + 1 }] : top;
+/** All rows, or the top rows plus the player's own row after a gap when they rank below them. */
+function visibleRows(rows, myId, showAll) {
+  const ranked = rows.map((row, i) => ({ row, rank: i + 1 }));
+  if (showAll) return ranked;
+  const top = ranked.slice(0, LEADERBOARD_SIZE);
+  const mine = ranked.find((item) => item.row.id === myId);
+  return mine && mine.rank > LEADERBOARD_SIZE ? [...top, null, mine] : top;
 }
 
 function leaderboardList(rows, myId) {
-  return h(
+  const list = h(
     'ol',
     {},
-    visibleRows(rows, myId).map((item) =>
+    visibleRows(rows, myId, state.showAllLeaderboard).map((item) =>
       item
         ? h('li', { value: item.rank }, nameCell(item.row, myId), `: ${score(item.row.tvd)}`)
         : h('li', { style: 'list-style: none' }, '...'),
     ),
   );
+  if (rows.length <= LEADERBOARD_SIZE) return list;
+  const toggle = h(
+    'button',
+    {
+      type: 'button',
+      onclick: () => {
+        state.showAllLeaderboard = !state.showAllLeaderboard;
+        renderPanel();
+      },
+    },
+    state.showAllLeaderboard ? 'Show less' : 'Show more',
+  );
+  return [list, h('p', {}, toggle)];
 }
 
 function answerPicker(question, onPick) {
@@ -265,7 +280,15 @@ function pastDayCard(question, round, myId) {
 
 // --- state -----------------------------------------------------------------
 
-const state = { today: null, round: null, answer: null, submitting: false, error: null, past: null };
+const state = {
+  today: null,
+  round: null,
+  answer: null,
+  submitting: false,
+  error: null,
+  past: null,
+  showAllLeaderboard: false,
+};
 
 /** The player's public id, from today's round or any past round they played. */
 function myId() {

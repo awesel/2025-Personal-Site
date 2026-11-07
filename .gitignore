@@ -1,3 +1,7 @@
 # Environment variables
 .env
+.dev.vars
 
+# Local Cloudflare dev state
+.wrangler/
+node_modules/

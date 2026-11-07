@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Is Mitch McConnell Dead?</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 24px 20px 48px;
+        font-family: "Times New Roman", Times, "Liberation Serif", serif;
+        font-size: 16px;
+        line-height: 1.45;
+        background-color: #ffffff;
+        color: #000000;
+      }
+
+      .container {
+        max-width: 960px;
+        margin: 0 auto;
+        display: flex;
+        gap: 48px;
+        align-items: flex-start;
+      }
+
+      .left {
+        flex: 0 0 320px;
+        min-width: 0;
+      }
+
+      .right {
+        flex: 1 1 0;
+        min-width: 0;
+      }
+
+      @media (max-width: 720px) {
+        .container {
+          flex-direction: column;
+          gap: 0;
+        }
+
+        .left {
+          flex: none;
+          width: 100%;
+        }
+      }
+
+      .footer {
+        max-width: 960px;
+        margin: 0 auto;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-weight: normal;
+        margin: 0 0 1em;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+      }
+
+      h3 {
+        font-size: 1.1rem;
+      }
+
+      p {
+        margin: 0 0 1em;
+      }
+
+      ol {
+        margin: 0 0 1em;
+        padding-left: 1.5em;
+      }
+
+      li {
+        margin: 0 0 0.35em;
+      }
+
+      summary {
+        cursor: pointer;
+      }
+
+      details {
+        margin: 0 0 1em;
+      }
+
+      details ol,
+      #past-days {
+        margin-top: 0.5em;
+      }
+
+      button,
+      input,
+      table {
+        font: inherit;
+      }
+
+      a {
+        color: #0000ee;
+      }
+
+      hr {
+        border: 0;
+        border-top: 1px solid #000;
+        margin: 1.5em 0;
+      }
+
+      figure {
+        margin: 0;
+      }
+
+      .photo {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .thumb {
+        display: block;
+        width: 120px;
+        height: auto;
+        margin: 0 0 0.5em;
+      }
+
+      .num {
+        font-variant-numeric: tabular-nums;
+        text-align: right;
+      }
+
+      .bar {
+        display: inline-block;
+        height: 0.8em;
+        background: #000;
+        vertical-align: baseline;
+      }
+
+      .small {
+        font-size: 13px;
+      }
+
+      table {
+        border-collapse: collapse;
+        margin: 0 0 1em;
+      }
+
+      th,
+      td {
+        border: 1px solid #000;
+        padding: 2px 6px;
+        text-align: left;
+        vertical-align: middle;
+      }
+
+      input[type="range"] {
+        width: 220px;
+        max-width: 50vw;
+        vertical-align: middle;
+      }
+
+      button {
+        margin: 0 6px 6px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="left" id="image"></div>
+      <div class="right">
+        <h1>Is Mitch McConnell Dead?</h1>
+        <h2 id="question">...</h2>
+        <hr />
+        <div id="panel"><p>Loading...</p></div>
+      </div>
+    </div>
+    <div class="footer">
+      <div id="past" hidden>
+        <hr />
+        <details>
+          <summary>Previous days</summary>
+          <div id="past-days"></div>
+        </details>
+      </div>
+      <hr />
+      <details>
+        <summary>How does this work?</summary>
+        <ol>
+          <li>Daily, there will be a question.</li>
+          <li>Answer it.</li>
+          <li>Guess the distribution that will result from other players of the game answering the question.</li>
+          <li>Your score is high if your guess is close, and low if it is far.</li>
+          <li>
+            The distribution will not be revealed until the end of the day (midnight PT), but you may see your
+            position in the leaderboard. Of course, with sufficient guesses, you may estimate the true distribution,
+            but please abide by the honor code and do not do this.
+          </li>
+        </ol>
+      </details>
+      <p class="small"><span id="status"></span> <a href="/">Home</a></p>
+    </div>
+    <script type="module" src="/mitch/game.js"></script>
+  </body>
+</html>

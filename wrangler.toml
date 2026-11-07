@@ -1,0 +1,8 @@
+name = "2025-personal-site"
+pages_build_output_dir = "."
+compatibility_date = "2026-10-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "personal-site-rounds"
+database_id = "fd15ebd3-ed56-4ab6-b815-55577e321457"

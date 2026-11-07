@@ -34,8 +34,9 @@ function formatDay(date) {
   });
 }
 
-function bar(share, width = 160) {
-  return h('span', { className: 'bar', style: `width: ${Math.round(Math.min(1, Math.max(0, share)) * width)}px` });
+function bar(share, striped = false, width = 120) {
+  const px = Math.round(Math.min(1, Math.max(0, share)) * width);
+  return px ? h('span', { className: striped ? 'bar striped' : 'bar', style: `width: ${px}px` }) : null;
 }
 
 function pct(share) {
@@ -88,16 +89,22 @@ function dayImage(question) {
   );
 }
 
-function optionBars(options, label, shares) {
+/** One row per answer, with a bar and percentage for each series side by side. */
+function optionBars(options, series) {
   return h(
     'table',
     {},
-    h('thead', {}, h('tr', {}, h('th', {}, 'Answer'), h('th', {}, label), h('th', {}))),
+    h('thead', {}, h('tr', {}, h('th', {}, 'Answer'), series.map((s) => h('th', { colSpan: 2 }, s.label)))),
     h(
       'tbody',
       {},
       options.map((option, i) =>
-        h('tr', {}, h('td', {}, option), h('td', {}, bar(shares[i])), h('td', { className: 'num' }, pct(shares[i]))),
+        h(
+          'tr',
+          {},
+          h('td', {}, option),
+          series.flatMap((s) => [h('td', {}, bar(s.shares[i], s.striped)), h('td', { className: 'num' }, pct(s.shares[i]))]),
+        ),
       ),
     ),
   );
@@ -258,16 +265,16 @@ function pastDayCard(question, round, myId) {
   let body;
   if (!round) body = h('p', {}, 'Could not load this day.');
   else if (room.n === 0) body = h('p', {}, 'Nobody played.');
-  else
+  else {
+    const winnerEntry = winner ? entries.find((e) => e.id === winner.id) : null;
+    const series = [{ label: `Everyone (n=${room.n})`, shares: room.shares }];
+    if (winnerEntry) series.push({ label: `${winner.name}'s guess`, shares: guessShares(winnerEntry.play), striped: true });
     body = [
-      optionBars(question.options, `Everyone (n=${room.n})`, room.shares),
-      h(
-        'p',
-        {},
-        winner ? `Winner: ${winner.name}, ${score(winner.tvd)}.` : '',
-        mine !== null ? ` Your score: ${score(mine)}.` : '',
-      ),
+      optionBars(question.options, series),
+      winner ? h('p', {}, `Winner: ${winner.name}, ${score(winner.tvd)}.`) : null,
+      mine !== null ? h('p', {}, `Your score: ${score(mine)}.`) : null,
     ];
+  }
 
   return h(
     'div',

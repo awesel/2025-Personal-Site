@@ -280,7 +280,7 @@ function pastDayCard(question, round, myId) {
     'div',
     {},
     h('img', { className: 'thumb', src: question.image, alt: question.imageAlt }),
-    h('p', {}, h('b', {}, formatDay(question.date)), `: ${question.question} (${room.n} ${room.n === 1 ? 'player' : 'players'})`),
+    h('p', {}, h('b', {}, formatDay(question.date)), `: ${question.question}`),
     body,
   );
 }

@@ -21,6 +21,13 @@ const SCHEDULE = [
     credit: null,
   },
   {
+    question: 'Do you want to live forever?',
+    options: ['Yes', 'No'],
+    image: '/mitch/images/live-forever.jpg',
+    imageAlt: 'A man in a striped nightcap and nightshirt and orange-tinted glasses holding a lit candle in a brass holder in the dark',
+    credit: null,
+  },
+  {
     question: 'Do you find opossums to be cute or scary?',
     options: ['Cute', 'Scary'],
     image: '/mitch/images/opossum.jpg',

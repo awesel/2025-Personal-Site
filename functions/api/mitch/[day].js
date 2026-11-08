@@ -4,8 +4,8 @@
 // A round is one Pacific-time day. Players are identified by an HttpOnly
 // cookie holding a random id; the API only ever returns a hash of it, so one
 // player cannot copy another's identity from the leaderboard. While a round is
-// open, other players' answers never leave the server: players who have
-// submitted get names and scores only.
+// open, other players' answers never leave the server: everyone gets names and
+// scores only.
 
 import { questionFor } from '../../../mitch/questions.js';
 import { leaderboard, parsePlay, validEntries } from '../../../mitch/score.js';
@@ -70,10 +70,9 @@ async function roundView(db, day, question, today, playerId) {
 
   // Closed rounds are public in full.
   if (phase === 'past') return { ...view, entries };
-  if (!mine) return view;
   const optionCount = question.options.length;
   const ranked = leaderboard(validEntries(entries, optionCount), optionCount);
-  return { ...view, leaderboard: ranked.map((r) => ({ name: r.name, tvd: r.tvd, you: r.id === mine.id })) };
+  return { ...view, leaderboard: ranked.map((r) => ({ name: r.name, tvd: r.tvd, you: r.id === mine?.id })) };
 }
 
 /** Records this attempt and reports whether the caller's IP is over the limit. */

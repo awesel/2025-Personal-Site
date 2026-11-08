@@ -158,7 +158,7 @@ function leaderboardList(rows) {
       type: 'button',
       onclick: () => {
         state.showAllLeaderboard = !state.showAllLeaderboard;
-        renderPanel();
+        renderBoard();
       },
     },
     state.showAllLeaderboard ? 'Show less' : 'Show more',
@@ -293,13 +293,27 @@ function todayResults(question, round) {
           ` and guessed ${question.options.map((o, i) => `${o} ${Math.round(myGuess[i] * 100)}%`).join(', ')}.`,
         )
       : null,
-    rows.length ? [h('h3', {}, "Today's leaderboard"), leaderboardList(rows)] : null,
-    h(
-      'p',
-      { className: 'small' },
-      `Scores change as more people play. The answers are revealed at midnight PT, in ${countdown()}.`,
-    ),
   ];
+}
+
+/** Today's leaderboard, shown to everyone, in its own section so expanding it leaves the form alone. */
+function renderBoard() {
+  const rows = state.round?.leaderboard ?? [];
+  const played = !!state.round?.mine;
+  $('board').replaceChildren(
+    ...[
+      rows.length ? [h('h3', {}, "Today's leaderboard"), leaderboardList(rows)] : null,
+      played
+        ? h(
+            'p',
+            { className: 'small' },
+            `Scores change as more people play. The answers are revealed at midnight PT, in ${countdown()}.`,
+          )
+        : null,
+    ]
+      .flat(2)
+      .filter(Boolean),
+  );
 }
 
 function pastDayCard(question, round, myId) {
@@ -405,6 +419,7 @@ function renderQuestion() {
 function render() {
   renderQuestion();
   renderPanel();
+  renderBoard();
   renderFooter();
 }
 

@@ -399,10 +399,13 @@ function renderPanel() {
 }
 
 function renderFooter() {
-  const past = state.past ?? [];
-  $('past').hidden = !past.length;
+  // Yesterday is always shown; older days sit in the Previous days dropdown.
+  const [yesterday, ...older] = state.past ?? [];
+  $('yesterday').hidden = !yesterday;
+  $('yesterday-day').replaceChildren(...(yesterday ? [pastDayCard(yesterday.question, yesterday.round, myId())] : []));
+  $('past').hidden = !older.length;
   $('past-days').replaceChildren(
-    ...past.flatMap((d, i) => [i ? h('hr') : null, pastDayCard(d.question, d.round, myId())]).filter(Boolean),
+    ...older.flatMap((d, i) => [i ? h('hr') : null, pastDayCard(d.question, d.round, myId())]).filter(Boolean),
   );
   const count = state.round?.count;
   $('status').textContent = state.today

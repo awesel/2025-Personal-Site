@@ -269,7 +269,7 @@ function guessForm(question, answer, { onBack, onSubmit, error, submitting }) {
       h('b', {}, 'Step 2 of 2.'),
       ' You answered ',
       h('i', {}, question.options[answer]),
-      '. Guess what share of the other players will give each answer. The sliders always add up to 100.',
+      '. Guess what share of all players will give each answer. The sliders always add up to 100.',
     ),
     h('table', {}, h('tbody', {}, rows)),
     h('p', {}, h('label', {}, 'Name on the leaderboard: ', nameInput)),
@@ -288,12 +288,10 @@ function guessForm(question, answer, { onBack, onSubmit, error, submitting }) {
 }
 
 function todayResults(question, round) {
-  const rows = round.leaderboard ?? [];
   const myPlay = validEntries([round.mine], question.options.length)[0]?.play;
   const myGuess = myPlay ? guessShares(myPlay) : null;
 
   return [
-    rows.some((r) => r.you) ? null : h('p', {}, 'Your score appears once someone else has played.'),
     myPlay
       ? h(
           'p',

@@ -86,12 +86,12 @@ function loadTurnstile() {
 
 // --- rendering -------------------------------------------------------------
 
-function dayImage(question) {
-  const { credit } = question;
+function figure(image) {
+  const { credit } = image;
   return h(
     'figure',
     {},
-    h('img', { className: 'photo', src: question.image, alt: question.imageAlt }),
+    h('img', { className: 'photo', src: image.src, alt: image.alt }),
     credit
       ? h(
           'figcaption',
@@ -102,6 +102,16 @@ function dayImage(question) {
         )
       : null,
   );
+}
+
+/** The day's images in random order, so neither one is always seen first. */
+function dayImages(question) {
+  const images = [...question.images];
+  for (let i = images.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [images[i], images[j]] = [images[j], images[i]];
+  }
+  return images.map(figure);
 }
 
 /** One row per answer, with a bar and percentage for each series side by side. */
@@ -340,7 +350,7 @@ function pastDayCard(question, round, myId) {
   return h(
     'div',
     {},
-    h('img', { className: 'thumb', src: question.image, alt: question.imageAlt }),
+    h('p', {}, question.images.map((image) => h('img', { className: 'thumb', src: image.src, alt: image.alt }))),
     h('p', {}, h('b', {}, formatDay(question.date)), `: ${question.question}`),
     body,
   );
@@ -416,7 +426,12 @@ function renderFooter() {
 function renderQuestion() {
   const question = state.today ? questionFor(state.today) : null;
   $('question').textContent = question ? `Today's question: ${question.question}` : 'No question today.';
-  $('image').replaceChildren(...(question ? [dayImage(question)] : []));
+  // Drawn once per day so the shuffled order holds through refreshes.
+  const imageBox = $('image');
+  if (imageBox.dataset.day !== state.today) {
+    imageBox.dataset.day = state.today;
+    imageBox.replaceChildren(...(question ? dayImages(question) : []));
+  }
 }
 
 function render() {

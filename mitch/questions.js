@@ -70,6 +70,23 @@ const SCHEDULE = [
       },
     ],
   },
+  {
+    question: 'Rate your intelligence compared to the average person',
+    options: [
+      'I am much more intelligent than the average person',
+      'I am slightly more intelligent than the average person',
+      'I am about as intelligent as the average person',
+      'I am slightly less intelligent than the average person',
+      'I am much less intelligent than the average person',
+    ],
+    images: [
+      {
+        src: '/mitch/images/jurgen-schmidhuber.jpg',
+        alt: 'Close-up of Jürgen Schmidhuber, tousled grey hair and a short grey beard, smiling slightly in front of blurred green trees',
+        credit: null,
+      },
+    ],
+  },
 ];
 
 function addDays(date, days) {

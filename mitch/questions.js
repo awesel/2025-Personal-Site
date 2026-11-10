@@ -60,108 +60,13 @@ const SCHEDULE = [
     ],
   },
   {
-    question: 'Is a hot dog a sandwich?',
-    options: ['Yes', 'No', "It's a taco"],
+    question: 'Pick which time period you think will involve the most FLOPs',
+    options: ['0-2026', '2026-2050', '2050+'],
     images: [
       {
-        src: '/mitch/images/hotdog.jpg',
-        alt: 'A hot dog in a toasted sesame bun with ketchup and a zigzag of yellow mustard',
-        credit: {
-          artist: 'Lim Tsze Kin 207073',
-          license: 'CC BY-SA 4.0',
-          source:
-            'https://commons.wikimedia.org/wiki/File:HK_SW_Wing_Lok_Street_FWD_Financial_Centre_shop_Maxim%27s_MX_Restaurant_afternoon_meal_food_July_2020_SS2_05.jpg',
-        },
-      },
-    ],
-  },
-  {
-    question: 'Could you win a fight against an angry goose?',
-    options: ['Yes, easily', 'It would be close', 'No, the goose wins'],
-    images: [
-      {
-        src: '/mitch/images/goose.jpg',
-        alt: 'A white farm goose seen from ground level, beak gaping wide as it hisses at the camera',
-        credit: {
-          artist: 'Trougnouf (Benoit Brummer)',
-          license: 'CC BY-SA 4.0',
-          source: 'https://commons.wikimedia.org/wiki/File:Angry_goose_(DSC_0780).jpg',
-        },
-      },
-    ],
-  },
-  {
-    question: 'Would you rather fight one horse-sized duck or 100 duck-sized horses?',
-    options: ['One horse-sized duck', '100 duck-sized horses'],
-    images: [
-      {
-        src: '/mitch/images/duck.jpg',
-        alt: 'An Indian runner duck shoved right up to the lens, its blurry orange beak filling the frame',
-        credit: {
-          artist: 'Daisytheduck',
-          license: 'CC BY-SA 4.0',
-          source: 'https://commons.wikimedia.org/wiki/File:Indian_runner_duck_looking_at_a_camera.jpg',
-        },
-      },
-    ],
-  },
-  {
-    question: 'Is cereal a soup?',
-    options: ['Yes', 'No'],
-    images: [
-      {
-        src: '/mitch/images/cereal.jpg',
-        alt: 'A glass bowl of rainbow Froot Loops with a spoon and milk',
-        credit: {
-          artist: 'Evan-Amos',
-          license: 'CC0',
-          source: 'https://commons.wikimedia.org/wiki/File:Froot-Loops-Cereal-Bowl.jpg',
-        },
-      },
-    ],
-  },
-  {
-    question: 'Does pineapple belong on pizza?',
-    options: ['Yes', 'No'],
-    images: [
-      {
-        src: '/mitch/images/pineapple-pizza.jpg',
-        alt: 'Close-up of a thick-crust Hawaiian pizza topped with pineapple rings and ham',
-        credit: {
-          artist: '@joefoodie from USA',
-          license: 'CC BY 2.0',
-          source: 'https://commons.wikimedia.org/wiki/File:Hawaiian_pizza_1.jpg',
-        },
-      },
-    ],
-  },
-  {
-    question: 'Are birds real?',
-    options: ['Yes', "No, they're government drones", 'Not sure'],
-    images: [
-      {
-        src: '/mitch/images/pigeon.jpg',
-        alt: 'Extreme close-up of a grey pigeon giving the camera a side-eye with one beady orange eye',
-        credit: {
-          artist: 'DemonTraitor',
-          license: 'CC BY-SA 2.5',
-          source: 'https://commons.wikimedia.org/wiki/File:Pigeon-close-up-on-head.jpg',
-        },
-      },
-    ],
-  },
-  {
-    question: 'Would you eat a bug for $1,000?',
-    options: ['Yes', 'No'],
-    images: [
-      {
-        src: '/mitch/images/bugs.jpg',
-        alt: 'A Thai market stall with trays of fried silkworm pupae, bamboo worms, crickets and water bugs',
-        credit: {
-          artist: 'Jnpet',
-          license: 'CC BY-SA 4.0',
-          source: 'https://commons.wikimedia.org/wiki/File:Roasted_insects_Thailand.jpg',
-        },
+        src: '/mitch/images/jensen-and-alice.jpg',
+        alt: 'Jensen Huang in a black T-shirt waving at a restaurant, with a smiling woman in a pink dress holding a glass of red wine behind him',
+        credit: null,
       },
     ],
   },

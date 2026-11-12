@@ -81,8 +81,8 @@ const SCHEDULE = [
     ],
     images: [
       {
-        src: '/mitch/images/jurgen-schmidhuber.jpg',
-        alt: 'Close-up of Jürgen Schmidhuber, tousled grey hair and a short grey beard, smiling slightly in front of blurred green trees',
+        src: '/mitch/images/jurgen-schmidhuber-time.jpg',
+        alt: 'A spoof TIME Person of the Year cover, "The Architects of AI": Jürgen Schmidhuber in a white tank top holds up a steel beam over a city, with a row of tech executives sitting on it',
         credit: null,
       },
     ],

@@ -87,6 +87,21 @@ const SCHEDULE = [
       },
     ],
   },
+  {
+    question: 'I believe that cats...',
+    options: [
+      'Have goals and aspirations just like humans',
+      'Have some goals or values, but perhaps not as deeply as humans do',
+      'Exist aimlessly without meaning',
+    ],
+    images: [
+      {
+        src: '/mitch/images/cat-sandwich.jpg',
+        alt: 'A wide-eyed tabby kitten with its head between two slices of white bread, captioned "mmm yumy samich"',
+        credit: null,
+      },
+    ],
+  },
 ];
 
 function addDays(date, days) {

@@ -105,9 +105,10 @@ const SCHEDULE = [
   {
     question: 'Where are all of the aliens?',
     options: [
-      "It's really hard to maintain intelligent life; perhaps they died in a war or upset their superintelligence",
-      "It's really hard to become alive and intelligent; if there are aliens, they are too far away to matter",
-      'We cannot detect their presence because they are hiding',
+      'Intelligent life is extremely rare, and we may be alone',
+      'Aliens exist, but they are too far away or we have not searched enough',
+      'Aliens exist, but they are hiding or choosing not to contact us',
+      'Aliens have already visited Earth or made contact',
     ],
     images: [
       {

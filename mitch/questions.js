@@ -102,6 +102,22 @@ const SCHEDULE = [
       },
     ],
   },
+  {
+    question: 'Where are all of the aliens?',
+    options: [
+      "It's really hard to become alive and intelligent",
+      "It's really hard to maintain intelligent life, perhaps they died in war, or upset their superintelligence",
+      'We cannot detect their presence because they are hiding',
+      'We cannot detect their presence because the universe is large',
+    ],
+    images: [
+      {
+        src: '/mitch/images/alien.jpg',
+        alt: 'The Xenomorph from Alien crouched in shallow water, its long curved head dripping slime, silhouetted against a burst of cold blue light',
+        credit: null,
+      },
+    ],
+  },
 ];
 
 function addDays(date, days) {

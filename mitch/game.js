@@ -417,7 +417,9 @@ function renderPanel() {
           h(
             'p',
             {},
-            'People tend to believe that they are more like other people than they truly are. I have a simple bar chart showing the probability mass placed on options that people chose themselves, versus ones that they did not (normalized by option count). It’s quite stark! From a Bayesian perspective, this is perhaps the correct answer: if your prior is weak, it can be updated by observing yourself. This is also a good strategy in this game: due to the small sample sizes, your answer has a large effect on the true distribution.',
+            'People tend to believe that they are more like other people than they truly are. I have a simple bar chart showing the probability mass placed on options that people chose themselves, versus ones that they did not (normalized by option count). It’s quite stark! From a Bayesian perspective, this is perhaps the correct answer: if your prior is weak, it can be updated by observing yourself',
+            h('a', { href: '#ref-1' }, '[1]'),
+            '. This is also a good strategy in this game: due to the small sample sizes, your answer has a large effect on the true distribution.',
           ),
           h('img', {
             className: 'chart',
@@ -443,8 +445,8 @@ function renderPanel() {
       ),
       h(
         'p',
-        { className: 'small' },
-        'Reference: Dražen Prelec, ',
+        { className: 'small', id: 'ref-1' },
+        '[1] Dražen Prelec, ',
         h('a', { href: 'https://doi.org/10.1126/science.1102081' }, '“A Bayesian Truth Serum for Subjective Data”'),
         ', Science 306 (2004): 462–466.',
       ),

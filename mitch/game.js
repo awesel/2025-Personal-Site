@@ -1,4 +1,4 @@
-import { nextQuestionDate, pastQuestions, questionFor } from './questions.js';
+import { START, nextQuestionDate, pastQuestions, questionFor } from './questions.js';
 import { guessShares, leaderboard, playerTvd, roomShares, score, validEntries } from './score.js';
 import { evenSplit, setShare } from './split.js';
 
@@ -372,9 +372,78 @@ function myId() {
   return state.round?.mine?.id ?? state.past?.find((d) => d.round?.mine)?.round.mine.id ?? null;
 }
 
+/** True once the last scheduled question has closed. */
+function seriesOver() {
+  return !!state.today && !questionFor(state.today) && !nextQuestionDate(state.today);
+}
+
+const WRAP_UP = [
+  '“Is Mitch McConnell Dead?” was a daily estimation game that ran for one week: Nov 6, 2026 – Nov 13, 2026. Players would first answer a survey question, then predict the distribution of answers among other players of the game.',
+  'Thank you all for playing! This was a fun week. Congratulations to Sarah for being the winningest player, to Jaelen for making the only perfect guess of the whole series, and to Aidan for being the most active player and for helping me design the questions.',
+];
+
 function renderPanel() {
   const question = state.today ? questionFor(state.today) : null;
   const panel = $('panel');
+  if (seriesOver()) {
+    panel.replaceChildren(
+      ...WRAP_UP.map((text) => h('p', {}, text)),
+      h('p', {}, 'There are two interesting findings from analyzing the data:'),
+      h(
+        'ul',
+        {},
+        h(
+          'li',
+          {},
+          h(
+            'p',
+            {},
+            'At low sample sizes, the average of people’s guesses is a better estimate of the true distribution than the average of their answers to the question itself! Below, I have a visualization of this effect. Frankly, I am surprised that the accuracy of averaging distributions doesn’t scale with more samples. If anyone has intuition for why this is the case, feel free to email me.',
+          ),
+          h('img', {
+            className: 'chart',
+            src: '/mitch/images/guesses-vs-answers.png',
+            alt: 'Line chart of score against number of people sampled, 1 to 11. The average of estimates scores 73 with one person and levels off around 84. The average of answers starts at 56, passes it between 3 and 4 people, and reaches 95.',
+          }),
+          h(
+            'p',
+            { className: 'small' },
+            '*Each data point only includes days where more than that many people played. Sample sizes 1–4 have eight data points, 5–7 have seven, and 8–11 have five.',
+          ),
+        ),
+        h(
+          'li',
+          {},
+          h(
+            'p',
+            {},
+            'People tend to believe that they are more like other people than they truly are. I have a simple bar chart showing the probability mass placed on options that people chose themselves, versus ones that they did not (normalized by option count). It’s quite stark! From a Bayesian perspective, this is perhaps the correct answer: if your prior is weak, it can be updated by observing yourself. This is also a good strategy in this game: due to the small sample sizes, your answer has a large effect on the true distribution.',
+          ),
+          h('img', {
+            className: 'chart',
+            src: '/mitch/images/own-vs-other.png',
+            alt: 'Bar chart of normalized probability mass, with 95% error bars: 1.69 on options people chose themselves (range 1.52 to 1.86) versus 0.65 on options they did not choose (range 0.56 to 0.73).',
+          }),
+          h(
+            'p',
+            {},
+            'However, the effect is too strong, and this ends up being suboptimal for gameplay; people update to such an extent that they tend to overestimate the number of people who would choose the same option that they did, and underestimate the number of people who would choose options that they did not.',
+          ),
+          h(
+            'p',
+            {},
+            'Please observe that the error bars are too large for me to make this claim rigorously, but this is just a blog, so I can say whatever I want. It’s certainly what we observed in this game! It would be cool to see whether this effect holds with a larger study.',
+          ),
+          h('img', {
+            className: 'chart',
+            src: '/mitch/images/overestimate.png',
+            alt: 'Bar chart of predicted minus actual share, with 95% error bars: +2.8 percentage points on options people chose (range -3.1 to +8.8) and -1.7 on options they did not choose (range -6.3 to +2.7).',
+          }),
+        ),
+      ),
+    );
+    return;
+  }
   if (!question) {
     const next = state.today ? nextQuestionDate(state.today) : null;
     panel.replaceChildren(h('p', {}, next ? `The next question is on ${formatDay(next)}.` : 'There is no question today.'));
@@ -407,6 +476,18 @@ function renderPanel() {
 }
 
 function renderFooter() {
+  if (seriesOver()) {
+    // Every day is shown, newest first, as the results of prior games.
+    const days = state.past ?? [];
+    $('yesterday').hidden = !days.length;
+    $('yesterday-heading').textContent = 'Results of prior games';
+    $('yesterday-day').replaceChildren(
+      ...days.flatMap((d, i) => [i ? h('hr') : null, pastDayCard(d.question, d.round, myId())]).filter(Boolean),
+    );
+    $('past').hidden = true;
+    $('status').textContent = `${formatDay(state.today)}.`;
+    return;
+  }
   // Yesterday is always shown; older days sit in the Previous days dropdown.
   const [yesterday, ...older] = state.past ?? [];
   $('yesterday').hidden = !yesterday;
@@ -424,11 +505,13 @@ function renderFooter() {
 function renderQuestion() {
   const question = state.today ? questionFor(state.today) : null;
   $('question').textContent = question ? `Today's question: ${question.question}` : 'No question today.';
+  $('question').hidden = seriesOver();
   // Drawn once per day so the shuffled order holds through refreshes.
   const imageBox = $('image');
   if (imageBox.dataset.day !== state.today) {
     imageBox.dataset.day = state.today;
-    imageBox.replaceChildren(...(question ? dayImages(question) : []));
+    const shown = question ?? (seriesOver() ? questionFor(START) : null);
+    imageBox.replaceChildren(...(shown ? dayImages(shown) : []));
   }
 }
 

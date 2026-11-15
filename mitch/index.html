@@ -33,6 +33,12 @@
         min-width: 0;
       }
 
+      .chart {
+        display: block;
+        width: 100%;
+        margin: 0 0 1em;
+      }
+
       @media (max-width: 720px) {
         .container {
           flex-direction: column;
@@ -188,7 +194,7 @@
     <div class="footer">
       <div id="yesterday" hidden>
         <hr />
-        <h3>Yesterday</h3>
+        <h3 id="yesterday-heading">Yesterday</h3>
         <div id="yesterday-day"></div>
       </div>
       <div id="past" hidden>
@@ -198,21 +204,6 @@
           <div id="past-days"></div>
         </details>
       </div>
-      <hr />
-      <details>
-        <summary>How does this work?</summary>
-        <ol>
-          <li>Daily, there will be a question.</li>
-          <li>Answer it.</li>
-          <li>Guess the distribution that will result from all players of the game answering the question.</li>
-          <li>Your score is high if your guess is close, and low if it is far.</li>
-          <li>
-            The distribution will not be revealed until the end of the day (midnight PT), but you may see your
-            position in the leaderboard. Of course, with sufficient guesses, you may estimate the true distribution,
-            but please abide by the honor code and do not do this.
-          </li>
-        </ol>
-      </details>
       <p class="small"><span id="status"></span> <a href="/">Home</a></p>
     </div>
     <script type="module" src="/mitch/game.js"></script>

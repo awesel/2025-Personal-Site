@@ -378,7 +378,7 @@ function seriesOver() {
 }
 
 const WRAP_UP = [
-  '“Is Mitch McConnell Dead?” was a daily estimation game that ran for one week: Nov 6, 2026 – Nov 13, 2026. Players would first answer a survey question, then predict the distribution of answers among other players of the game.',
+  'I am sad to report that “Is Mitch McConnell Dead?” is dead. It was a daily estimation game that ran for one week: Nov 6, 2026 – Nov 13, 2026. Players would first answer a survey question, then predict the distribution of answers among other players of the game.',
   'Thank you all for playing! This was a fun week. Congratulations to Sarah for being the winningest player, to Jaelen for making the only perfect guess of the whole series, and to Aidan for being the most active player and for helping me design the questions.',
 ];
 
@@ -440,6 +440,13 @@ function renderPanel() {
             alt: 'Bar chart of predicted minus actual share, with 95% error bars: +2.8 percentage points on options people chose (range -3.1 to +8.8) and -1.7 on options they did not choose (range -6.3 to +2.7).',
           }),
         ),
+      ),
+      h(
+        'p',
+        { className: 'small' },
+        'Reference: Dražen Prelec, ',
+        h('a', { href: 'https://doi.org/10.1126/science.1102081' }, '“A Bayesian Truth Serum for Subjective Data”'),
+        ', Science 306 (2004): 462–466.',
       ),
     );
     return;

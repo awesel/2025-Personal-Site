@@ -56,6 +56,25 @@
         margin: 0 0 1em;
       }
 
+      .logo {
+        display: block;
+        width: 280px;
+        max-width: 100%;
+        height: auto;
+        transform: rotate(2deg);
+        transform-origin: center;
+      }
+
+      h1.signature {
+        margin: 0;
+      }
+
+      hr.signature-line {
+        width: 320px;
+        max-width: 100%;
+        margin: 8px 0 1.5em;
+      }
+
       hr {
         border: 0;
         border-top: 1px solid #000000;
@@ -309,7 +328,8 @@
       </div>
 
       <div class="right">
-        <h1>Andrew Wesel</h1>
+        <h1 class="signature"><img class="logo" src="/images/andrew-logo.png" alt="Andrew Wesel" /></h1>
+        <hr class="signature-line" />
 
         <p>
           I am curious about decision-making and deep learning: why do people make the decisions
